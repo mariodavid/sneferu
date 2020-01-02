@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+    id 'groovy'
+}
+
+apply plugin: "maven"
+
+group 'de.diedavids.sneferu'
+version '0.1-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://dl.bintray.com/cuba-platform/main'
+
+    }
+    jcenter()
+}
+
+ext {
+    vaadinVersion = "8.9.2-0-cuba"
+}
+
+dependencies {
+
+    compile 'com.haulmont.cuba:cuba-gui:7.1.3'
+    compile 'com.haulmont.cuba:cuba-web-tests:7.1.3'
+
+    /* Vaadin */
+    compile("com.vaadin:vaadin-server:${vaadinVersion}") {
+        exclude(group: 'com.vaadin', module: 'vaadin-sass-compiler')
+    }
+    compile("com.vaadin:vaadin-compatibility-server:${vaadinVersion}") {
+        exclude(group: 'com.vaadin', module: 'vaadin-sass-compiler')
+    }
+    //compile("com.vaadin:vaadin-push:${vaadinVersion}")
+
+    testCompile 'org.codehaus.groovy:groovy:2.5.4'
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.slf4j:slf4j-simple:1.7.25'
+
+
+}
