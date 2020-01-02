@@ -14,7 +14,7 @@ public interface Interaction<T extends ScreenTestAPI> {
 
   /**
    * executes the interactions against the given screen Test API
-   * s
+   *
    * @param screenTestAPI the screen Test API instance the interactions should be executed against
    */
   void execute(T screenTestAPI);
