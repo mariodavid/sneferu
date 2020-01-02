@@ -1,5 +1,6 @@
 package de.diedavids.sneferu;
 
+import com.haulmont.cuba.gui.screen.EditorScreen;
 import de.diedavids.sneferu.screen.ScreenTestAPI;
 
 /**
@@ -14,7 +15,7 @@ public interface InteractionExecutor<THIS> {
 
 
   /**
-   * starts the interactions
+   * starts an interaction
    *
    * @param interaction the interactions to execute
    * @return <THIS> the interactions executor for further method chaining
@@ -22,7 +23,7 @@ public interface InteractionExecutor<THIS> {
   THIS interact(Interaction interaction);
 
   /**
-   * continues the interactions (alias for interact())
+   * continues the interactions {@link InteractionExecutor#interact(Interaction)}
    *
    * @param interaction the interactions to execute
    * @return <THIS> the interactions executor for further method chaining
@@ -30,12 +31,33 @@ public interface InteractionExecutor<THIS> {
   THIS andThen(Interaction interaction);
 
 
+  /**
+   * interacts with the screen and returns the interaction outcome
+   * @param interaction the interaction with outcome to verify
+   * @param <O> the type of verification
+   * @param <T> the type of the ScreenTestAPI
+   * @return the outcome of the verification of type O
+   */
   <O, T extends ScreenTestAPI> O verify(InteractionWithOutcome<O, T> interaction);
 
+  /**
+   * alias for {@link InteractionExecutor#verify(InteractionWithOutcome)}
+   */
   <O, T extends ScreenTestAPI> O get(InteractionWithOutcome<O, T> interaction);
+
+  /**
+   * alias for {@link InteractionExecutor#verify(InteractionWithOutcome)}
+   */
   <O, T extends ScreenTestAPI> O interactAndGet(InteractionWithOutcome<O, T> interaction);
+
+  /**
+   * alias for {@link InteractionExecutor#verify(InteractionWithOutcome)}
+   */
   <O, T extends ScreenTestAPI> O andThenGet(InteractionWithOutcome<O, T> interaction);
 
+  /**
+   * alias for {@link InteractionExecutor#verify(InteractionWithOutcome)}
+   */
   <O, T extends ScreenTestAPI> O andThenVerify(InteractionWithOutcome<O, T> interaction);
 
 }

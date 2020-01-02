@@ -8,6 +8,13 @@ import de.diedavids.sneferu.screen.ScreenTestAPI;
 import de.diedavids.sneferu.screen.StandardEditorTestAPI;
 import de.diedavids.sneferu.screen.StandardLookupTestAPI;
 
+
+/**
+ * UITestAPI is the main entry point for interacting with Screens in an web integration test case.
+ *
+ * This API provides the ability to receive / work with ScreenTestAPI instances, that allow
+ * to interact with a particular screen via its Test API.
+ */
 public interface UiTestAPI {
 
 

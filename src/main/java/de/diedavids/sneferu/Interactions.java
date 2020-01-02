@@ -8,7 +8,11 @@ import de.diedavids.sneferu.components.testapi.ComponentTestAPI;
 import de.diedavids.sneferu.interactions.*;
 
 /**
- * Factory methods for common interactions
+ * Factory methods for all interactions of the Interactions API of sneferu.
+ *
+ * Normally should be included via a static import like:
+ *
+ * > import static de.diedavids.sneferu.Interactions.*
  */
 public class Interactions {
 
@@ -84,12 +88,21 @@ public class Interactions {
         return new OpenTabInteraction(tabSheet, tabId);
     }
 
+    /**
+     * creates a Editor Value Interaction, that fetches a given entity attribute via its StandardEditor
+     *
+     * @param attribute the attribute to retrieve
+     * @param type the type of the Attribute
+     * @param <T> type of the Attribute
+     *
+     * @return an EditorValueInteraction instance containing the value
+     */
     public static <T extends Object> EditorValueInteraction<T> editorValue(String attribute, Class<T> type) {
         return new EditorValueInteraction<>(attribute, type);
     }
 
     /**
-     * creates a Close Editor interactions, that closes an editor with the Close and Commit Close Action {@link EditorScreen#WINDOW_COMMIT_AND_CLOSE}
+     * creates a Close Editor interaction, that closes an editor with the Close and Commit Close Action {@link EditorScreen#WINDOW_COMMIT_AND_CLOSE}
      *
      * @return a CloseEditorInteraction instance
      */
@@ -98,33 +111,48 @@ public class Interactions {
     }
 
 
+    /**
+     * creates a Close Input Dialog Interaction, that closes an input dialog with its default action
+     *
+     * @return a CloseInputDialogInteraction instance
+     */
     public static CloseInputDialogInteraction closeInputDialog() {
         return new CloseInputDialogInteraction();
     }
 
 
+    /**
+     * creates a Cancel Editor interaction, that closes an editor with the Close Action {@link EditorScreen#WINDOW_CLOSE}
+     *
+     * @return a CancelEditorInteraction instance
+     */
     public static CancelEditorInteraction cancelEditor() {
         return new CancelEditorInteraction();
     }
 
 
+    /**
+     * creates a Screen Open Mode interaction, that provides information about the OpenMode of the Screen
+     *
+     * @return a ScreenOpenModeInteraction instance
+     */
     public static ScreenOpenModeInteraction screenOpenMode() {
         return new ScreenOpenModeInteraction();
     }
 
 
     /**
-     * creates a Click interactions, that clicks on a given component
+     * creates a click interaction, that clicks on a given component
      *
      * @param componentDescriptor the component to click on
      * @param <C> type of the Component
      * @param <F> type of the Component Test API
      *
-     * @return a ClickInstance instance
+     * @return a ClickInteraction instance
      */
-    public static <C extends Component, F extends ComponentTestAPI<C>> ClickInteraction click(ComponentDescriptor<C, F> componentDescriptor) {
+    public static <C extends Component, F extends ComponentTestAPI<C>> ClickInteraction click(
+        ComponentDescriptor<C, F> componentDescriptor
+    ) {
         return new ClickInteraction(componentDescriptor);
     }
-
-
 }

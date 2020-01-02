@@ -13,7 +13,6 @@ import de.diedavids.sneferu.screen.ScreenTestAPI;
 import de.diedavids.sneferu.screen.StandardEditorTestAPI;
 import de.diedavids.sneferu.screen.StandardLookupTestAPI;
 import java.util.ArrayList;
-import java.util.function.Supplier;
 
 public class CubaWebUiTestAPI implements UiTestAPI {
 
@@ -49,7 +48,9 @@ public class CubaWebUiTestAPI implements UiTestAPI {
 
 
     @Override
-    public <S extends StandardEditor> StandardEditorTestAPI<S> getOpenedEditorScreen(Class<S> screenEditorClass) {
+    public <S extends StandardEditor> StandardEditorTestAPI<S> getOpenedEditorScreen(
+        Class<S> screenEditorClass
+    ) {
         ArrayList<Screen> activeScreens = new ArrayList<>(getOpenedScreens()
                 .getAll());
         Screen screen = activeScreens.get(activeScreens.size() - 1);
@@ -64,7 +65,10 @@ public class CubaWebUiTestAPI implements UiTestAPI {
     }
 
     @Override
-    public <E extends Entity, S extends StandardEditor> StandardEditorTestAPI<S> openStandardEditor(Class<E> entityClass, Class<S> standardEditorClass) {
+    public <E extends Entity, S extends StandardEditor> StandardEditorTestAPI<S> openStandardEditor(
+        Class<E> entityClass,
+        Class<S> standardEditorClass
+    ) {
         S screen = (S) screenBuilders.editor(entityClass, rootScreen())
                 .newEntity()
                 .withScreenClass(standardEditorClass)
@@ -73,7 +77,10 @@ public class CubaWebUiTestAPI implements UiTestAPI {
     }
 
     @Override
-    public <E extends Entity, S extends StandardLookup> StandardLookupTestAPI<S> openStandardLookup(Class<E> entityClass, Class<S> lookupScreenClass) {
+    public <E extends Entity, S extends StandardLookup> StandardLookupTestAPI<S> openStandardLookup(
+        Class<E> entityClass,
+        Class<S> lookupScreenClass
+    ) {
         S screen = (S) screenBuilders.lookup(entityClass, rootScreen())
                 .withScreenClass(lookupScreenClass)
                 .show();
