@@ -51,13 +51,42 @@ public class CubaWebUiTestAPI implements UiTestAPI {
     public <S extends StandardEditor> StandardEditorTestAPI<S> getOpenedEditorScreen(
         Class<S> screenEditorClass
     ) {
-        ArrayList<Screen> activeScreens = new ArrayList<>(getOpenedScreens()
-                .getAll());
-        Screen screen = activeScreens.get(activeScreens.size() - 1);
+        Screen screen = getLastOpenedScreen();
 
         if (screen instanceof StandardEditor) {
             S castedScreen = (S) screen;
             return new StandardEditorTestAPI(screenEditorClass, castedScreen);
+        }
+        else {
+            throw new ScreenNotOpenException();
+        }
+    }
+
+    @Override
+    public <S extends StandardLookup> StandardLookupTestAPI<S> getOpenedLookupScreen(
+        Class<S> screenLookupClass
+    ) {
+
+        Screen screen = getLastOpenedScreen();
+
+        if (screen instanceof StandardLookup) {
+            S castedScreen = (S) screen;
+            return new StandardLookupTestAPI<>(screenLookupClass, castedScreen);
+        }
+        else {
+            throw new ScreenNotOpenException();
+        }
+    }
+
+    @Override
+    public <S extends Screen> ScreenTestAPI<S, ScreenTestAPI> getOpenedScreen(
+        Class<S> screenClass
+    ) {
+
+        Screen screen = getLastOpenedScreen();
+
+        if (screen != null) {
+            return new ScreenTestAPI(screenClass, screen);
         }
         else {
             throw new ScreenNotOpenException();
@@ -101,6 +130,18 @@ public class CubaWebUiTestAPI implements UiTestAPI {
                 .getOpenedScreens();
     }
 
+    private Screen getLastOpenedScreen() {
+        ArrayList<Screen> activeScreens = new ArrayList<>(
+            getOpenedScreens().getAll()
+        );
+
+        if (activeScreens.size() > 0) {
+            return activeScreens.get(activeScreens.size() - 1);
+        }
+        else {
+            return null;
+        }
+    }
 
     @Override
     public void closeAllScreens() {

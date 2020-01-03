@@ -1,6 +1,7 @@
 package de.diedavids.sneferu;
 
 import com.haulmont.cuba.core.entity.Entity;
+import com.haulmont.cuba.gui.screen.Screen;
 import com.haulmont.cuba.gui.screen.StandardEditor;
 import com.haulmont.cuba.gui.screen.StandardLookup;
 import de.diedavids.sneferu.screen.InputDialogTestAPI;
@@ -38,6 +39,36 @@ public interface UiTestAPI {
    */
   <S extends StandardEditor> StandardEditorTestAPI<S> getOpenedEditorScreen(
       Class<S> screenEditorClass
+  );
+
+
+  /**
+   * returns a Test API instance for a given Standard Lookup Screen class if screen is opened.
+   *
+   * If screen type is not open, a ScreenNotOpenException will be thrown
+   *
+   * @param screenLookupClass the type of the Standard Lookup Screen
+   * @param <S> the type of the Screen
+   *
+   * @return an instance of the Test API
+   */
+  <S extends StandardLookup> StandardLookupTestAPI<S> getOpenedLookupScreen(
+      Class<S> screenLookupClass
+  );
+
+
+  /**
+   * returns a Test API instance for a given Screen class if screen is opened.
+   *
+   * If screen type is not open, a ScreenNotOpenException will be thrown
+   *
+   * @param screenClass the type of the Screen
+   * @param <S> the type of the Screen
+   *
+   * @return an instance of the Test API
+   */
+  <S extends Screen> ScreenTestAPI<S, ScreenTestAPI> getOpenedScreen(
+      Class<S> screenClass
   );
 
 
