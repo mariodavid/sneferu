@@ -4,11 +4,11 @@ import com.haulmont.cuba.gui.screen.StandardEditor;
 import de.diedavids.sneferu.InteractionWithOutcome;
 import de.diedavids.sneferu.screen.StandardEditorTestAPI;
 
-public class EditorValueInteraction<T> implements InteractionWithOutcome<T, StandardEditorTestAPI> {
+public class EntityValueInteraction<T> implements InteractionWithOutcome<T, StandardEditorTestAPI> {
 
     private final String attribute;
 
-    public EditorValueInteraction(String attribute, Class<T> type) {
+    public EntityValueInteraction(String attribute, Class<T> type) {
         this.attribute = attribute;
     }
 

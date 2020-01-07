@@ -82,7 +82,22 @@ public interface UiTestAPI {
    */
   <E extends Entity, S extends StandardEditor> StandardEditorTestAPI<S> openStandardEditor(
       Class<E> entityClass,
-      Class<S> editorScreenClass
+      Class<S> standardEditorClass
+  );
+
+  /**
+   * opens a Standard Editor Screen for a given Entity
+   * @param entityClass the entity class of the Editor
+   * @param editorScreenClass the class of the Editor
+   * @param entity the Entity instance to use
+   * @param <E> type of the Entity
+   * @param <S> type of the Standard Editor
+   * @return an instance of this editor screen (via StandardEditorTestAPI)
+   */
+  <E extends Entity, S extends StandardEditor> StandardEditorTestAPI<S> openStandardEditor(
+      Class<E> entityClass,
+      Class<S> standardEditorClass,
+      E entity
   );
 
 

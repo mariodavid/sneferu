@@ -1,11 +1,10 @@
 package de.diedavids.sneferu.components.testapi;
 
-import com.haulmont.cuba.gui.components.TextField;
+import com.haulmont.cuba.gui.components.TextInputField;
 
+public class TextFieldTestAPI extends GenericComponentTestAPI<TextInputField> {
 
-public class TextFieldTestAPI extends GenericComponentTestAPI<TextField> {
-
-    public TextFieldTestAPI(TextField component) {
+    public TextFieldTestAPI(TextInputField component) {
         super(component);
     }
 

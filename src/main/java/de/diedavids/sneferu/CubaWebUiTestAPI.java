@@ -106,6 +106,16 @@ public class CubaWebUiTestAPI implements UiTestAPI {
     }
 
     @Override
+    public <E extends Entity, S extends StandardEditor> StandardEditorTestAPI<S> openStandardEditor(
+        Class<E> entityClass, Class<S> standardEditorClass, E entity) {
+        S screen = (S) screenBuilders.editor(entityClass, rootScreen())
+            .editEntity(entity)
+            .withScreenClass(standardEditorClass)
+            .show();
+        return new StandardEditorTestAPI<>(standardEditorClass, screen);
+    }
+
+    @Override
     public <E extends Entity, S extends StandardLookup> StandardLookupTestAPI<S> openStandardLookup(
         Class<E> entityClass,
         Class<S> lookupScreenClass

@@ -143,7 +143,7 @@ class FirstSneferuSpec extends Specification {
 The different concepts when using Sneferu are described below. It mainly consists of the following:
 
 1. `UiTestAPI`
-2. `ScreenTestAPI` & `PageObject`
+2. `ScreenTestAPI` & `ScreenObject`
 3. `ComponentTestAPI`
 4. `Interactions`
 
@@ -214,20 +214,20 @@ def "Screen Test API usage"() {
 
 More information on what Interactions are and how they can be used can be found in the corresponding [Interactions](#Interactions) section.
 
-### Page Objects
+### Screen Objects
 
-An extension of the ScreenTestAPI is the concept of a Page Object.
+An extension of the ScreenTestAPI is the concept of a Screen Object.
 
-Instead of using the API directly through the TestScreenAPI, it is also possible to create a [Page Object](https://martinfowler.com/bliki/PageObject.html)
-that represents the API of a particular Page / Screen of the UI. This allows to create a dedicated abstraction between the test case and the screen that is under test.
+Instead of using the API directly through the TestScreenAPI, it is also possible to create a [Screen Object](https://martinfowler.com/bliki/PageObject.html)
+that represents the API of a particular Screen of the UI. This allows to create a dedicated abstraction between the test case and the screen that is under test.
 
-##### Definition of a Page Object (CustomerBrowsePageObject)
+##### Definition of a Screen Object (CustomerBrowseScreenObject)
 
-In order to create a PageObject, a class needs to be created representing one screen (in this case `CustomerBrowse`). It furthermore needs to implement the interface `PageObject<T extends ScreenTestAPI>`. 
+In order to create a ScreenObject, a class needs to be created representing one screen (in this case `CustomerBrowse`). It furthermore needs to implement the interface `ScreenObject<T extends ScreenTestAPI>`. 
 
 ```java
-public class CustomerBrowsePageObject implements 
-    PageObject<StandardLookupTestAPI<CustomerBrowse>> {
+public class CustomerBrowseScreenObject implements 
+    ScreenObject<StandardLookupTestAPI<CustomerBrowse>> {
 
     private final UiTestAPI uiTestAPI;
     private StandardLookupTestAPI<CustomerBrowse> delegate;
@@ -235,7 +235,7 @@ public class CustomerBrowsePageObject implements
 
     // ...
 
-    public CustomerBrowsePageObject searchForCustomer(Customer customer) {
+    public CustomerBrowseScreenObject searchForCustomer(Customer customer) {
         delegate
                 .component(suggestionField("quickSearch"))
                 .search(customer);
@@ -243,7 +243,7 @@ public class CustomerBrowsePageObject implements
         return this;
     }
 
-    public CustomerBrowsePageObject searchForCustomer(String customerName) {
+    public CustomerBrowseScreenObject searchForCustomer(String customerName) {
 
         Metadata metadata = testUiEnvironment.getContainer().getBean(Metadata.class);
 
@@ -262,44 +262,44 @@ public class CustomerBrowsePageObject implements
 
 With the above definition it is now possible to use this higher level abstraction in the different test cases:
 
-##### Test Case with Page Object
+##### Test Case with Screen Object
 
-The shown test case is using the API of the PageObject, which consists of:
+The shown test case is using the API of the ScreenObject, which consists of:
 
 * `void searchForCustomer(String customerName)`
 * `void searchForCustomer(Customer customer)`
 * `boolean isActive()`
 
 ```groovy
-def "screens can be used through its Page Object Test API"() {
+def "screens can be used through its Screen Object Test API"() {
 
-    given: "a page object can be created using a factory method"
-    def customerBrowsePageObject = CustomerBrowsePageObject.of(
+    given: "a screen object can be created using a factory method"
+    def customerBrowseScreenObject = CustomerBrowseScreenObject.of(
             uiTestAPI, environment
     )
 
     and:
-    customerBrowsePageObject
+    customerBrowseScreenObject
             .searchForCustomer("Bob Ross")
 
-    and: "a page object can also be created via its constructor"
-    def customerEditPageObject = new CustomerEditPageObject(
+    and: "a screen object can also be created via its constructor"
+    def customerEditScreenObject = new CustomerEditScreenObject(
             uiTestAPI.getOpenedEditorScreen(CustomerEdit),
             environment,
             uiTestAPI
     )
 
     when:
-    customerEditPageObject
+    customerEditScreenObject
             .changeNameTo("Meggy Simpson")
 
 
     then:
-    customerEditPageObject
+    customerEditScreenObject
         .isClosed()
 
     and:
-    customerBrowsePageObject
+    customerBrowseScreenObject
         .isActive()
 }
 ```
@@ -310,7 +310,7 @@ This variant allows to have a higher abstraction in the test case. It also decou
 
 The next concept of Sneferu is the Component Test API. This API is basically the same thing for a `Component` what the `ScreenTestAPI` is for a CUBA Screen. It is an abstraction on top of the CUBA `Component` APIs that is designed in the context of testing.
 
-In order to use an instance of a Component Test API, it has to be created in the test case (or the Page Object) via its factory method:
+In order to use an instance of a Component Test API, it has to be created in the test case (or the Screen Object) via its factory method:
 
 ````groovy
 import static de.diedavids.sneferu.ComponentDescriptors.*

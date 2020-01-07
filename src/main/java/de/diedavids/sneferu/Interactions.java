@@ -18,7 +18,7 @@ public class Interactions {
 
 
     /**
-     * creates a set value interactions, that sets a value on a given component
+     * creates a set value interaction, that sets a value on a given component
      *
      * @param componentDescriptor the component descriptor describing the component to act upon
      * @param value the value that should be set
@@ -35,9 +35,9 @@ public class Interactions {
     }
 
     /**
-     * alias for setValue interactions
+     * alias for setValue interaction
      *
-     * creates a set value interactions, that sets a value on a given component
+     * creates a set value interaction, that sets a value on a given component
      *
      * @param componentDescriptor the component descriptor describing the component to act upon
      * @param value the value that should be set
@@ -56,9 +56,9 @@ public class Interactions {
 
 
     /**
-     * alias for setValue interactions
+     * alias for setValue interaction
      *
-     * creates a set value interactions, that sets a value on a given component
+     * creates a set value interaction, that sets a value on a given component
      *
      * @param componentDescriptor the component descriptor describing the component to act upon
      * @param value the value that should be set
@@ -89,7 +89,7 @@ public class Interactions {
     }
 
     /**
-     * creates a Editor Value Interaction, that fetches a given entity attribute via its StandardEditor
+     * creates a Entity Value Interaction, that fetches a given entity attribute via its StandardEditor
      *
      * @param attribute the attribute to retrieve
      * @param type the type of the Attribute
@@ -97,8 +97,40 @@ public class Interactions {
      *
      * @return an EditorValueInteraction instance containing the value
      */
-    public static <T extends Object> EditorValueInteraction<T> editorValue(String attribute, Class<T> type) {
-        return new EditorValueInteraction<>(attribute, type);
+    public static <T extends Object> EntityValueInteraction<T> entityValue(String attribute, Class<T> type) {
+        return new EntityValueInteraction<>(attribute, type);
+    }
+
+    /**
+     * creates a get value interaction, that gets a value on a given component
+     *
+     * @param componentDescriptor the component descriptor describing the component to act upon
+     * @param <C> type of the Component
+     * @param <F> type of the Component Test API
+     *
+     * @return a SetValueInteraction instance
+     */
+    public static <C extends Component, F extends ComponentTestAPI<C>> GetValueInteraction getValue(
+        ComponentDescriptor<C, F> componentDescriptor
+    ) {
+        return new GetValueInteraction(componentDescriptor);
+    }
+
+    /**
+     * alias for getValue interaction
+     *
+     * creates a get value interaction, that gets a value on a given component
+     *
+     * @param componentDescriptor the component descriptor describing the component to act upon
+     * @param <C> type of the Component
+     * @param <F> type of the Component Test API
+     *
+     * @return a GetValueInteraction instance
+     */
+    public static <C extends Component, F extends ComponentTestAPI<C>> GetValueInteraction componentValue(
+        ComponentDescriptor<C, F> componentDescriptor
+    ) {
+        return getValue(componentDescriptor);
     }
 
     /**

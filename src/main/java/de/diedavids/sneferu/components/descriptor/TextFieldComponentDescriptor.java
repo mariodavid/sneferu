@@ -1,18 +1,17 @@
 package de.diedavids.sneferu.components.descriptor;
 
-
-import com.haulmont.cuba.gui.components.TextField;
+import com.haulmont.cuba.gui.components.TextInputField;
 import de.diedavids.sneferu.components.testapi.TextFieldTestAPI;
 
 public class TextFieldComponentDescriptor
-        extends GenericComponentDescriptor<TextField, TextFieldTestAPI> {
+        extends GenericComponentDescriptor<TextInputField, TextFieldTestAPI> {
 
     public TextFieldComponentDescriptor(String componentId) {
-        super(TextField.class, componentId);
+        super(TextInputField.class, componentId);
     }
 
     @Override
-    public TextFieldTestAPI createTestAPI(TextField component) {
+    public TextFieldTestAPI createTestAPI(TextInputField component) {
         return new TextFieldTestAPI(component);
     }
 }
