@@ -1,0 +1,30 @@
+package com.haulmont.sneferu.interactions;
+
+import com.haulmont.cuba.gui.components.TabSheet;
+import com.haulmont.sneferu.components.descriptor.TabsheetComponentDescriptor;
+import com.haulmont.sneferu.screen.ScreenTestAPI;
+import com.haulmont.sneferu.Interaction;
+
+public class OpenTabInteraction implements Interaction<ScreenTestAPI> {
+
+    private String tabId;
+    private final TabsheetComponentDescriptor componentDescriptor;
+    private ScreenTestAPI screenTestAPI;
+
+    public OpenTabInteraction(TabsheetComponentDescriptor tabSheet, String tabId) {
+        this.componentDescriptor = tabSheet;
+        this.tabId = tabId;
+    }
+
+    @Override
+    public void execute(ScreenTestAPI screenTestAPI) {
+        this.screenTestAPI = screenTestAPI;
+        doExecute();
+    }
+
+    private void doExecute() {
+        ((TabSheet)screenTestAPI.component(componentDescriptor)
+                .rawComponent())
+                .setSelectedTab(tabId);
+    }
+}
