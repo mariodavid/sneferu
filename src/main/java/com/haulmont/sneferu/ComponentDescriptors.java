@@ -1,15 +1,7 @@
 package com.haulmont.sneferu;
 
 
-import com.haulmont.sneferu.components.descriptor.ButtonComponentDescriptor;
-import com.haulmont.sneferu.components.descriptor.DateFieldComponentDescriptor;
-import com.haulmont.sneferu.components.descriptor.GroupTableComponentDescriptor;
-import com.haulmont.sneferu.components.descriptor.LookupFieldComponentDescriptor;
-import com.haulmont.sneferu.components.descriptor.PickerFieldComponentDescriptor;
-import com.haulmont.sneferu.components.descriptor.SuggestionFieldComponentDescriptor;
-import com.haulmont.sneferu.components.descriptor.TabsheetComponentDescriptor;
-import com.haulmont.sneferu.components.descriptor.TextFieldComponentDescriptor;
-import com.haulmont.sneferu.components.descriptor.TextInputFieldComponentDescriptor;
+import com.haulmont.sneferu.components.descriptor.*;
 
 /**
  * Factory methods for all Component Descriptors
@@ -27,6 +19,43 @@ public class ComponentDescriptors {
      */
     public static GroupTableComponentDescriptor groupTable(String id) {
         return new GroupTableComponentDescriptor(id);
+    }
+
+    /**
+     * creates a {@link TableComponentDescriptor} instance
+     * @param id the id of the component as defined in the screen XML descriptor
+     * @return a TableComponentDescriptor instance
+     */
+    public static TableComponentDescriptor table(String id) {
+        return new TableComponentDescriptor(id);
+    }
+
+    /**
+     * creates a {@link DataGridComponentDescriptor} instance
+     * @param id the id of the component as defined in the screen XML descriptor
+     * @return a DataGridComponentDescriptor instance
+     */
+    public static DataGridComponentDescriptor dataGrid(String id) {
+        return new DataGridComponentDescriptor(id);
+    }
+
+
+    /**
+     * creates a {@link TreeDataGridComponentDescriptor} instance
+     * @param id the id of the component as defined in the screen XML descriptor
+     * @return a TreeDataGridComponentDescriptor instance
+     */
+    public static TreeDataGridComponentDescriptor treeDataGrid(String id) {
+        return new TreeDataGridComponentDescriptor(id);
+    }
+
+    /**
+     * creates a {@link CalendarComponentDescriptor} instance
+     * @param id the id of the component as defined in the screen XML descriptor
+     * @return a CalendarComponentDescriptor instance
+     */
+    public static CalendarComponentDescriptor calendar(String id) {
+        return new CalendarComponentDescriptor(id);
     }
 
 
@@ -79,6 +108,16 @@ public class ComponentDescriptors {
 
 
     /**
+     * creates a {@link CheckBoxComponentDescriptor} instance
+     * @param id the id of the component as defined in the screen XML descriptor
+     * @return a CheckBoxComponentDescriptor instance
+     */
+    public static CheckBoxComponentDescriptor checkBox(String id) {
+        return new CheckBoxComponentDescriptor(id);
+    }
+
+
+    /**
      * creates a {@link SuggestionFieldComponentDescriptor} instance
      * @param id the id of the component as defined in the screen XML descriptor
      * @return a SuggestionFieldComponentDescriptor instance
@@ -99,12 +138,52 @@ public class ComponentDescriptors {
 
 
     /**
+     * creates a {@link ImageComponentDescriptor} instance
+     * @param id the id of the component as defined in the screen XML descriptor
+     * @return a ImageComponentDescriptor instance
+     */
+    public static ImageComponentDescriptor image(String id) {
+        return new ImageComponentDescriptor(id);
+    }
+
+
+    /**
      * creates a {@link TabsheetComponentDescriptor} instance
      * @param id the id of the component as defined in the screen XML descriptor
      * @return a TabsheetComponentDescriptor instance
      */
     public static TabsheetComponentDescriptor tabSheet(String id) {
         return new TabsheetComponentDescriptor(id);
+    }
+
+
+    /**
+     * creates a {@link AccordionComponentDescriptor} instance
+     * @param id the id of the component as defined in the screen XML descriptor
+     * @return a AccordionComponentDescriptor instance
+     */
+    public static AccordionComponentDescriptor accordion(String id) {
+        return new AccordionComponentDescriptor(id);
+    }
+
+
+    /**
+     * creates a {@link TreeComponentDescriptor} instance
+     * @param id the id of the component as defined in the screen XML descriptor
+     * @return a TreeComponentDescriptor instance
+     */
+    public static TreeComponentDescriptor tree(String id) {
+        return new TreeComponentDescriptor(id);
+    }
+
+
+    /**
+     * creates a {@link ColorPickerComponentDescriptor} instance
+     * @param id the id of the component as defined in the screen XML descriptor
+     * @return a ColorPickerComponentDescriptor instance
+     */
+    public static ColorPickerComponentDescriptor colorPicker(String id) {
+        return new ColorPickerComponentDescriptor(id);
     }
 
 }
