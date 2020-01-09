@@ -140,6 +140,15 @@ class FirstSneferuSpec extends Specification {
 }
 ```
 
+### Example Usage
+
+A dedicated example of using Sneferu is shown via the CUBA Petclinic sample application: [cuba-platform/cuba-petclinic-using-sneferu](https://github.com/cuba-platform/cuba-petclinic-using-sneferu).
+
+It contains a lot of example test cases that show the various usage options of Sneferu.
+
+
+### Documentation
+
 The different concepts when using Sneferu are described below. It mainly consists of the following:
 
 1. `UiTestAPI`
