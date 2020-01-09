@@ -3,10 +3,10 @@ package com.haulmont.sneferu;
 import com.haulmont.sneferu.screen.ScreenTestAPI;
 
 /**
- * executes a given Interaction in a fluent API manner.
+ * executes a given Interaction in a fluent API fashion.
  *
  * The type <THIS> refers to the implementation type itself.
- * It is used to return the correct type in the fluent API
+ * It is used to return the correct type in the fluent API.
  *
  * @param <THIS> the type of the class implementing this interface
  */
@@ -16,7 +16,7 @@ public interface InteractionExecutor<THIS> {
   /**
    * starts an interaction
    *
-   * @param interaction the interactions to execute
+   * @param interaction the interaction to execute
    * @return <THIS> the interactions executor for further method chaining
    */
   THIS interact(Interaction interaction);
@@ -24,7 +24,7 @@ public interface InteractionExecutor<THIS> {
   /**
    * continues the interactions {@link InteractionExecutor#interact(Interaction)}
    *
-   * @param interaction the interactions to execute
+   * @param interaction the interaction to execute
    * @return <THIS> the interactions executor for further method chaining
    */
   THIS andThen(Interaction interaction);
