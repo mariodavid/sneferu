@@ -502,8 +502,8 @@ It is possible to define custom interaction that are not included in the Sneferu
 Taking the Slider example from above: the first step is to create a class defining the Interaction:
 
 ```java
-import de.haulmont.sneferu.Interaction;
-import de.haulmont.sneferu.screen.ScreenTestAPI;
+import com.haulmont.sneferu.Interaction;
+import com.haulmont.sneferu.screen.ScreenTestAPI;
 
 public class SlideInteraction implements Interaction<ScreenTestAPI> {
 

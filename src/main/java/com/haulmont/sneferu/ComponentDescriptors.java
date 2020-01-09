@@ -10,7 +10,6 @@ import com.haulmont.sneferu.components.descriptor.SuggestionFieldComponentDescri
 import com.haulmont.sneferu.components.descriptor.TabsheetComponentDescriptor;
 import com.haulmont.sneferu.components.descriptor.TextFieldComponentDescriptor;
 import com.haulmont.sneferu.components.descriptor.TextInputFieldComponentDescriptor;
-import de.haulmont.sneferu.components.descriptor.*;
 
 /**
  * Factory methods for all Component Descriptors
