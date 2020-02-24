@@ -15,13 +15,16 @@ Using Sneferu it enables you to:
 * ensure the correct linking between Screen XML and its Controller counterpart
 * verify correct display of any programmatic creation of Screen Components / Dialogs
 * emulate & verify data loading  
+* emulate & verify Service Interface interactions
 
 As Sneferu is based on the web integration test facilities of CUBA, there are certain limitation in what areas are not covered. In particular Sneferu relies on the abstractions provided by the CUBA and Vaadin component interfaces. It assumes that behind this interface everything "works as expected". 
 
 What does Sneferu _not cover_:
 
 * End-to-End data loading and displaying on a Screen
+* End-to-End Service execution (middleware)
 * Client-Side Vaadin UI logic that is executed only in the browser
+
 
 If you can live with those trade-offs feel free to join the lovely world of web integration testing in CUBA expressed though a beautiful API.
 
