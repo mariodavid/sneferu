@@ -7,26 +7,34 @@ import com.haulmont.sneferu.InteractionExecutor;
 import com.haulmont.sneferu.InteractionWithOutcome;
 import com.haulmont.sneferu.components.ComponentDescriptor;
 import com.haulmont.sneferu.components.testapi.ComponentTestAPI;
+import java.util.function.Supplier;
 
-public class ScreenTestAPI<S extends Screen, THIS extends ScreenTestAPI> implements InteractionExecutor<THIS> {
+public class ScreenTestAPI<S extends Screen, THIS extends ScreenTestAPI> implements
+    InteractionExecutor<THIS> {
 
   protected S screen;
+  protected Supplier<S> screenSupplier;
   protected Class<S> screenClass;
-
 
 
   /**
    * access to the underlying screen instance
    *
-   * Useful when need some direct method invocation / data from the screen instance that is not expressed
-   * through the corresponding ScreenTestAPI.
+   * Useful when need some direct method invocation / data from the screen instance that is not
+   * expressed through the corresponding ScreenTestAPI.
    *
    * @return the screen instance
    */
   public S screen() {
+    if (screenSupplier != null && screen == null) {
+      initScreen();
+    }
     return screen;
   }
 
+  private void initScreen() {
+    this.screen = screenSupplier.get();
+  }
 
 
   public ScreenTestAPI(Class<S> screenClass, S screen) {
@@ -35,15 +43,21 @@ public class ScreenTestAPI<S extends Screen, THIS extends ScreenTestAPI> impleme
   }
 
 
-  public <C extends Component, F extends ComponentTestAPI<C>> F component(ComponentDescriptor<C, F> componentDescriptor) {
+  public ScreenTestAPI(Class<S> screenClass, Supplier<S> screenSupplier) {
+    this.screenClass = screenClass;
+    this.screenSupplier = screenSupplier;
+  }
+
+  public <C extends Component, F extends ComponentTestAPI<C>> F component(
+      ComponentDescriptor<C, F> componentDescriptor) {
     return componentDescriptor.createTestAPI(rawComponent(componentDescriptor));
   }
 
 
-  public <C extends Component, F extends ComponentTestAPI<C>> C rawComponent(ComponentDescriptor<C, F> componentDescriptor) {
+  public <C extends Component, F extends ComponentTestAPI<C>> C rawComponent(
+      ComponentDescriptor<C, F> componentDescriptor) {
     return (C) screen.getWindow().getComponentNN(componentDescriptor.getId());
   }
-
 
 
   @Override
@@ -71,7 +85,8 @@ public class ScreenTestAPI<S extends Screen, THIS extends ScreenTestAPI> impleme
 
 
   @Override
-  public <O, THIS extends ScreenTestAPI> O interactAndGet(InteractionWithOutcome<O, THIS> interaction) {
+  public <O, THIS extends ScreenTestAPI> O interactAndGet(
+      InteractionWithOutcome<O, THIS> interaction) {
     return doGet(interaction);
   }
 

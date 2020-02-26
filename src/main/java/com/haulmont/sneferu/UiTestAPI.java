@@ -37,7 +37,12 @@ public interface UiTestAPI {
    *
    * @return an instance of the Test API
    */
-  <S extends StandardEditor> StandardEditorTestAPI<S> getOpenedEditorScreen(
+  <E extends Entity, S extends StandardEditor<E>> StandardEditorTestAPI<E, S> getOpenedEditorScreen(
+      Class<S> screenEditorClass
+  );
+
+
+  <E extends Entity, S extends StandardEditor<E>> StandardEditorTestAPI<E, S> getLazyOpenedEditorScreen(
       Class<S> screenEditorClass
   );
 
@@ -52,7 +57,7 @@ public interface UiTestAPI {
    *
    * @return an instance of the Test API
    */
-  <S extends StandardLookup> StandardLookupTestAPI<S> getOpenedLookupScreen(
+  <E extends Entity, S extends StandardLookup<E>> StandardLookupTestAPI<E, S> getOpenedLookupScreen(
       Class<S> screenLookupClass
   );
 
@@ -75,12 +80,12 @@ public interface UiTestAPI {
   /**
    * opens a Standard Editor Screen
    * @param entityClass the entity class of the Editor
-   * @param editorScreenClass the class of the Editor
+   * @param standardEditorClass the class of the Editor
    * @param <E> type of the Entity
    * @param <S> type of the Standard Editor
    * @return an instance of this editor screen (via StandardEditorTestAPI)
    */
-  <E extends Entity, S extends StandardEditor> StandardEditorTestAPI<S> openStandardEditor(
+  <E extends Entity, S extends StandardEditor<E>> StandardEditorTestAPI<E, S> openStandardEditor(
       Class<E> entityClass,
       Class<S> standardEditorClass
   );
@@ -88,13 +93,13 @@ public interface UiTestAPI {
   /**
    * opens a Standard Editor Screen for a given Entity
    * @param entityClass the entity class of the Editor
-   * @param editorScreenClass the class of the Editor
+   * @param standardEditorClass the class of the Editor
    * @param entity the Entity instance to use
    * @param <E> type of the Entity
    * @param <S> type of the Standard Editor
    * @return an instance of this editor screen (via StandardEditorTestAPI)
    */
-  <E extends Entity, S extends StandardEditor> StandardEditorTestAPI<S> openStandardEditor(
+  <E extends Entity, S extends StandardEditor<E>> StandardEditorTestAPI<E, S> openStandardEditor(
       Class<E> entityClass,
       Class<S> standardEditorClass,
       E entity
@@ -110,7 +115,7 @@ public interface UiTestAPI {
    * @param <S> type of the StandardLookup
    * @return an instance of this lookup screen (via StandardLookupTestAPI)
    */
-  <E extends Entity, S extends StandardLookup> StandardLookupTestAPI<S> openStandardLookup(
+  <E extends Entity, S extends StandardLookup<E>> StandardLookupTestAPI<E, S> openStandardLookup(
       Class<E> entityClass,
       Class<S> lookupScreenClass
   );
@@ -121,7 +126,6 @@ public interface UiTestAPI {
    * @return true if active, otherwise false
    */
   boolean isActive(ScreenTestAPI screenTestAPI);
-
 
   /**
    * closes all screens in the UI

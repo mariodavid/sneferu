@@ -13,6 +13,7 @@ import com.haulmont.sneferu.screen.ScreenTestAPI;
 import com.haulmont.sneferu.screen.StandardEditorTestAPI;
 import com.haulmont.sneferu.screen.StandardLookupTestAPI;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class CubaWebUiTestAPI implements UiTestAPI {
 
@@ -48,7 +49,7 @@ public class CubaWebUiTestAPI implements UiTestAPI {
 
 
     @Override
-    public <S extends StandardEditor> StandardEditorTestAPI<S> getOpenedEditorScreen(
+    public <E extends Entity, S extends StandardEditor<E>> StandardEditorTestAPI<E, S> getOpenedEditorScreen(
         Class<S> screenEditorClass
     ) {
         Screen screen = getLastOpenedScreen();
@@ -63,7 +64,39 @@ public class CubaWebUiTestAPI implements UiTestAPI {
     }
 
     @Override
-    public <S extends StandardLookup> StandardLookupTestAPI<S> getOpenedLookupScreen(
+    public <E extends Entity, S extends StandardEditor<E>> StandardEditorTestAPI<E,S> getLazyOpenedEditorScreen(
+        Class<S> screenEditorClass
+    ) {
+        final Optional<StandardEditorTestAPI<E, S>> optionalScreen = tryToOpenStandardEditor(
+            screenEditorClass);
+
+        return optionalScreen.orElseGet(() -> new StandardEditorTestAPI<E, S>(
+            screenEditorClass, () -> {
+            final Optional<StandardEditorTestAPI<E, S>> optionalScreen2 = tryToOpenStandardEditor(
+                screenEditorClass);
+
+            return optionalScreen2
+                .map(ScreenTestAPI::screen)
+                .orElseThrow(ScreenNotOpenException::new);
+        }));
+    }
+
+    private <E extends Entity, S extends StandardEditor<E>> Optional<StandardEditorTestAPI<E,S>> tryToOpenStandardEditor(
+        Class<S> screenEditorClass
+    ) {
+        Screen screen = getLastOpenedScreen();
+
+        if (screen instanceof StandardEditor) {
+            S castedScreen = (S) screen;
+            return Optional.of(new StandardEditorTestAPI(screenEditorClass, castedScreen));
+        }
+        else {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public <E extends Entity, S extends StandardLookup<E>> StandardLookupTestAPI<E, S> getOpenedLookupScreen(
         Class<S> screenLookupClass
     ) {
 
@@ -71,7 +104,7 @@ public class CubaWebUiTestAPI implements UiTestAPI {
 
         if (screen instanceof StandardLookup) {
             S castedScreen = (S) screen;
-            return new StandardLookupTestAPI<>(screenLookupClass, castedScreen);
+            return new StandardLookupTestAPI<E,S>(screenLookupClass, castedScreen);
         }
         else {
             throw new ScreenNotOpenException();
@@ -94,7 +127,7 @@ public class CubaWebUiTestAPI implements UiTestAPI {
     }
 
     @Override
-    public <E extends Entity, S extends StandardEditor> StandardEditorTestAPI<S> openStandardEditor(
+    public <E extends Entity, S extends StandardEditor<E>> StandardEditorTestAPI<E,S> openStandardEditor(
         Class<E> entityClass,
         Class<S> standardEditorClass
     ) {
@@ -106,8 +139,11 @@ public class CubaWebUiTestAPI implements UiTestAPI {
     }
 
     @Override
-    public <E extends Entity, S extends StandardEditor> StandardEditorTestAPI<S> openStandardEditor(
-        Class<E> entityClass, Class<S> standardEditorClass, E entity) {
+    public <E extends Entity, S extends StandardEditor<E>> StandardEditorTestAPI<E,S> openStandardEditor(
+        Class<E> entityClass,
+        Class<S> standardEditorClass,
+        E entity
+    ) {
         S screen = (S) screenBuilders.editor(entityClass, rootScreen())
             .editEntity(entity)
             .withScreenClass(standardEditorClass)
@@ -116,7 +152,7 @@ public class CubaWebUiTestAPI implements UiTestAPI {
     }
 
     @Override
-    public <E extends Entity, S extends StandardLookup> StandardLookupTestAPI<S> openStandardLookup(
+    public <E extends Entity, S extends StandardLookup<E>> StandardLookupTestAPI<E, S> openStandardLookup(
         Class<E> entityClass,
         Class<S> lookupScreenClass
     ) {

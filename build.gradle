@@ -37,9 +37,23 @@ dependencies {
     }
     //compile("com.vaadin:vaadin-push:${vaadinVersion}")
 
-    testCompile 'org.codehaus.groovy:groovy:2.5.4'
-    testCompile 'junit:junit:4.12'
+
     testCompile 'org.slf4j:slf4j-simple:1.7.25'
 
 
+
+    testCompile('org.junit.jupiter:junit-jupiter-api:5.5.2')
+    testCompile('org.junit.jupiter:junit-jupiter-engine:5.5.2')
+
+
+    testCompile 'org.mockito:mockito-core:3.2.4'
+    testCompile 'org.mockito:mockito-junit-jupiter:3.2.4'
+
+
+    testCompile("org.assertj:assertj-core:3.11.1")
+}
+
+
+test {
+    useJUnitPlatform()
 }
