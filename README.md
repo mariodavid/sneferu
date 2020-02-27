@@ -85,7 +85,7 @@ In order to use Sneferu, it is required to add the dependency to the CUBA projec
 configure(webModule) {
     // ...
     dependencies {
-        testCompile('com.haulmont.sneferu:sneferu:**SNEFERU-VERSION**')
+        testCompile('de.diedavids.sneferu:sneferu:**SNEFERU-VERSION**')
     }
 }
 ```
@@ -95,10 +95,10 @@ Sneferu can be used with JUnit as well as Spock. Just add the corresponding depe
 Afterwards you can create your first web integration test:
 
 ```groovy
-import com.haulmont.sneferu.UiTestAPI
+import de.diedavids.sneferu.UiTestAPI
 
-import static com.haulmont.sneferu.ComponentDescriptors.*
-import static com.haulmont.sneferu.Interactions.*
+import static de.diedavids.sneferu.ComponentDescriptors.*
+import static de.diedavids.sneferu.Interactions.*
 
 
 class FirstSneferuSpec extends Specification {
@@ -325,7 +325,7 @@ The next concept of Sneferu is the Component Test API. This API is basically the
 In order to use an instance of a Component Test API, it has to be created in the test case (or the Screen Object) via its factory method:
 
 ````groovy
-import static com.haulmont.sneferu.ComponentDescriptors.*
+import static de.diedavids.sneferu.ComponentDescriptors.*
 
 // ...
 
@@ -402,8 +402,8 @@ The last remaining concept of Sneferu is the Interactions APIs. Interactions are
 An interaction usage looks like this:
 
 ```groovy
-import static com.haulmont.sneferu.ComponentDescriptors.button
-import static com.haulmont.sneferu.Interactions.click
+import static de.diedavids.sneferu.ComponentDescriptors.button
+import static de.diedavids.sneferu.Interactions.click
 
 def "Interaction Usage"() {
 
@@ -427,9 +427,9 @@ An interaction invoked on a `ScreenTestAPI` instance (like the `customerBrowse` 
 
 The Interaction then goes ahead and performs the desired action on the target component.
 
-All interactions can be created via its Factory: `com.haulmont.sneferu.Interactions`. Normally from a readability point of view it once again makes sense to use static imports for them:
+All interactions can be created via its Factory: `de.diedavids.sneferu.Interactions`. Normally from a readability point of view it once again makes sense to use static imports for them:
 
-`import static com.haulmont.sneferu.Interactions.*`
+`import static de.diedavids.sneferu.Interactions.*`
 
 There are two types of Interactions:
 
@@ -485,8 +485,8 @@ Terminating Interactions can be invoked via one of the following alias methods i
 Here is an example on how to use the two different types of interactions in a test case:
 
 ```groovy
-import static com.haulmont.sneferu.ComponentDescriptors.*
-import static com.haulmont.sneferu.Interactions.*
+import static de.diedavids.sneferu.ComponentDescriptors.*
+import static de.diedavids.sneferu.Interactions.*
 
 def "Chainable Interactions can be combined to perform a series of steps"() {
 
@@ -514,8 +514,8 @@ It is possible to define custom interaction that are not included in the Sneferu
 Taking the Slider example from above: the first step is to create a class defining the Interaction:
 
 ```java
-import com.haulmont.sneferu.Interaction;
-import com.haulmont.sneferu.screen.ScreenTestAPI;
+import de.diedavids.sneferu.Interaction;
+import de.diedavids.sneferu.screen.ScreenTestAPI;
 
 public class SlideInteraction implements Interaction<ScreenTestAPI> {
 
