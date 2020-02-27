@@ -25,7 +25,6 @@ What does Sneferu _not cover_:
 * End-to-End Service execution (middleware)
 * Client-Side Vaadin UI logic that is executed only in the browser
 
-
 If you can live with those trade-offs feel free to join the lovely world of web integration testing in CUBA expressed though a beautiful API.
 
 #### Motivation & Background
@@ -49,31 +48,37 @@ The documentation shows all test cases written in Spock, but Sneferu works with 
 
 An example test case in Sneferu looks like this:
 
-```groovy
-def "a customer can be created through a form starting from the customer browse screen"() {
+```java
+public class VisitBrowseToEditTest {
 
-    given:
-    def customerBrowse = uiTestAPI
-                            .openStandardLookup(Customer, CustomerBrowse)
+  @Test
+  public void aVisitCanBeCreated_whenAllFieldsAreFilled(
+      @StartScreen StandardLookupTestAPI<Visit,VisitBrowse> visitBrowse,
+      @SubsequentScreen StandardEditorTestAPI<Visit, VisitEdit> visitEdit,
+      @NewEntity Pet pikachu
+  ) {
 
-    when:
-    customerBrowse
-            .interact(click(button("createBtn")))
+    // given:
+    pikachu.setName("Pikachu");
 
-    and:
-    def customerEdit = uiTestAPI
-                        .getOpenedEditorScreen(CustomerEdit)
+    // and:
+    visitBrowse.interact(click(button("createBtn")));
 
-    OperationResult result = customerEdit
-            .interact(enter(textField("nameField"), "Bob Ross"))
-            .andThenGet(closeEditor())
+    // when:
+    OperationResult outcome = (OperationResult) visitEdit
+        .interact(enter(dateField("visitDateField"), new Date()))
+        .interact(enter(textField("descriptionField"), "Regular Visit"))
+        .interact(select(lookupField("petField"), pikachu))
+        .andThenGet(closeEditor());
 
-    then:
-    result == OperationResult.success()
+    // then:
+    assertThat(outcome).isEqualTo(OperationResult.success());
 
-    and:
-    uiTestAPI.isActive(customerBrowse)
-    !uiTestAPI.isActive(customerEdit)
+    // and:
+    assertThat(environment.getUiTestAPI().isActive(visitEdit))
+      .isFalse();
+
+  }
 }
 ```
 
@@ -105,40 +110,32 @@ class FirstSneferuSpec extends Specification {
 
     @Shared
     @ClassRule
-    TestUiEnvironment environment =
-            new TestUiEnvironment(TestImprovementsWebTestContainer.Common.INSTANCE)
+    SneferuTestUiEnvironment environment =
+            new SneferuTestUiEnvironment(TestImprovementsWebTestContainer.Common.INSTANCE)
                     .withScreenPackages(
                             "com.haulmont.cuba.web.app.main",
                             "com.rtcab.ddceti.web.screens.customer"
                     )
                     .withUserLogin("admin")
+                    .withMainScreen(MainScreen)
 
-    UiTestAPI uiTestAPI
-
-    def setup() {
-        uiTestAPI = new CubaWebUiTestAPI(
-                environment, 
-                AppBeans.get(ScreenBuilders.class), 
-                MainScreen
-        )
-    }
 
     def "click a button, open a screen, enter some values and close the screen"() {
 
         given:
-        def customerBrowse = uiTestAPI.openStandardLookup(Customer, CustomerBrowse)
+        def customerBrowse = environment.uiTestAPI.openStandardLookup(Customer, CustomerBrowse)
 
         when:
         customerBrowse
                 .interact(click(button("createBtn")))
 
         and:
-        uiTestAPI.getOpenedEditorScreen(CustomerEdit)
+        environment.uiTestAPI.getOpenedEditorScreen(CustomerEdit)
                 .interact(enter(textField("nameField"), "Bob Ross"))
                 .andThenGet(closeEditor())
 
         then:
-        uiTestAPI.isActive(customerBrowse)
+        environment.uiTestAPI.isActive(customerBrowse)
     }
 }
 ```
@@ -163,19 +160,17 @@ Let's go through them one by one.
 
 ### UI Test API
 
-The UI Test API is the interaction point in the test case that manages screens. It allows to open / close screens and retrieve information about opened screens.
- 
-An example of its usage looks like this:
+The UI Test API is the interaction point in the test case that manages screens. It allows to open / close screens and retrieve information about opened screens. It can be accessed through the `environment` instance via its method `getUiTestAPI()`. An example of its usage looks like this:
 
 ```groovy
 def "UI Test API usage"() {
 
     given: 'a screen can be opened by the test case'
-    def customerBrowse = uiTestAPI
+    def customerBrowse = environment.uiTestAPI
                             .openStandardLookup(Customer, CustomerBrowse)
                             
     and: 'a automatically opened screen can be retrieved'
-    def customerEdit = uiTestAPI
+    def customerEdit = environment.uiTestAPI
                         .getOpenedEditorScreen(CustomerEdit)
 
     then: 'information about active state of a screen can be retrieved'
@@ -183,21 +178,39 @@ def "UI Test API usage"() {
 }
 ```
 
-#### Creating a UiTestAPI
 
-In order to use a UiTestAPI instance, it needs to be created. In its simplest form
-an instance can be created by using the `CubaWebUiTestAPI` class directly:
+#### JUnit 5 Screen Test Injection
 
-```groovy
-UiTestAPI uiTestAPI = new CubaWebUiTestAPI(
-                environment, 
-                AppBeans.get(ScreenBuilders.class), 
-                MainScreen
-        )
+When using JUnit it is also possible to instead of imperatively interact with the `UiTestAPI` it is also possible to directly inject the screens to the test, that the test should work upon.
+
+An example of this looks like this:
+
+```java
+class JUnit5TestInjection {
+
+  @Test
+  public void a_screen_can_be_injected_to_directly_work_with_the_screens(
+      @StartScreen StandardLookupTestAPI<Visit,VisitBrowse> visitBrowse,
+      @SubsequentScreen StandardEditorTestAPI<Visit, VisitEdit> visitEdit
+  ) {
+
+    visitBrowse
+        .interact(click(button("createBtn")));
+    
+    visitEdit
+        .interact(enter(dateField("visitDateField"), new Date()));
+    
+    // ...
+
+  }
+
+}
 ```
 
-In order to function properly it requires an instance of the `TestUiEnvironment` as well as the class of the `MainScreen` used in the application.
+In this case the test case just expresses its dependencies for the screens that should be used. There are two variants to it:
 
+* `@StartScreen` is used when a screen should be injected that needs to be started on. In case the screen is not already open in the application, it is not possible to inject it
+* `@SubsequentScreen` is used when a screen should be injected in the test, but is currently not already opened. In this case the screen fetching from the application is postponed until the first interaction  
 
 ### Screen Test API
 
@@ -239,10 +252,9 @@ In order to create a ScreenObject, a class needs to be created representing one 
 
 ```java
 public class CustomerBrowseScreenObject implements 
-    ScreenObject<StandardLookupTestAPI<CustomerBrowse>> {
+    ScreenObject<StandardLookupTestAPI<Customer, CustomerBrowse>> {
 
-    private final UiTestAPI uiTestAPI;
-    private StandardLookupTestAPI<CustomerBrowse> delegate;
+    private StandardLookupTestAPI<Customer, CustomerBrowse> delegate;
     private final TestUiEnvironment testUiEnvironment;
 
     // ...
@@ -266,7 +278,7 @@ public class CustomerBrowseScreenObject implements
     }
 
     public boolean isActive() {
-        return uiTestAPI.isActive(delegate);
+        return testUiEnvironment.getUiTestAPI().isActive(delegate);
     }
 
 }
@@ -287,7 +299,7 @@ def "screens can be used through its Screen Object Test API"() {
 
     given: "a screen object can be created using a factory method"
     def customerBrowseScreenObject = CustomerBrowseScreenObject.of(
-            uiTestAPI, environment
+            environment
     )
 
     and:
@@ -297,8 +309,7 @@ def "screens can be used through its Screen Object Test API"() {
     and: "a screen object can also be created via its constructor"
     def customerEditScreenObject = new CustomerEditScreenObject(
             uiTestAPI.getOpenedEditorScreen(CustomerEdit),
-            environment,
-            uiTestAPI
+            environment
     )
 
     when:
@@ -408,7 +419,7 @@ import static de.diedavids.sneferu.Interactions.click
 def "Interaction Usage"() {
 
     given:
-    def customerBrowse = uiTestAPI
+    def customerBrowse = environment.uiTestAPI
                             .openStandardLookup(Customer, CustomerBrowse)
 
     when: 'using the click interaction'
