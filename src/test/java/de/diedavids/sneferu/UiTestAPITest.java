@@ -1,5 +1,6 @@
 package de.diedavids.sneferu;
 
+import static de.diedavids.sneferu.ComponentDescriptors.button;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -7,6 +8,8 @@ import static org.mockito.Mockito.when;
 import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.Screens;
 import com.haulmont.cuba.gui.Screens.OpenedScreens;
+import com.haulmont.cuba.gui.components.Button;
+import com.haulmont.cuba.gui.components.Window;
 import com.haulmont.cuba.gui.screen.Screen;
 import com.haulmont.cuba.web.app.main.MainScreen;
 import com.haulmont.cuba.web.testsupport.TestUiEnvironment;
@@ -45,7 +48,7 @@ class UiTestAPITest {
   }
 
   @Test
-  void given_screenIsNotOpen_when_aLazyOpenedStandardEditor_anInstanceIsReturnedThatTriesToFetchTheScreenOnTheFly() {
+  void given_screenIsNotOpen_when_aLazyOpenedStandardEditor_anInstanceIsReturnedThatTriesToFetchTheScreenOnTheFly_whenRequestingScreen() {
 
     // given:
     final CustomerStandardEditor foundCustomerEditor = new CustomerStandardEditor();
@@ -61,6 +64,35 @@ class UiTestAPITest {
     // expect:
     assertThat(lazyOpenedEditorScreen().screen())
         .isEqualTo(foundCustomerEditor);
+  }
+
+  @Test
+  void given_screenIsNotOpen_when_aLazyOpenedStandardEditor_anInstanceIsReturnedThatTriesToFetchTheScreenOnTheFly_whenRequestingComponent() {
+
+    // given:
+    final CustomerStandardEditor foundCustomerEditor = mock(CustomerStandardEditor.class);
+
+    // and:
+    final Window screenWindow = mock(Window.class);
+    when(foundCustomerEditor.getWindow())
+        .thenReturn(screenWindow);
+
+    // and:
+    final Button okBtn = mock(Button.class);
+    when(screenWindow.getComponentNN("okBtn"))
+        .thenReturn(okBtn);
+
+    allScreens()
+        .thenReturn(
+            noOpenScreens()
+        )
+        .thenReturn(
+            openScreens(foundCustomerEditor)
+        );
+
+    // expect:
+    assertThat(lazyOpenedEditorScreen().rawComponent(button("okBtn")))
+        .isEqualTo(okBtn);
   }
 
   private StandardEditorTestAPI<Customer, CustomerStandardEditor> lazyOpenedEditorScreen() {

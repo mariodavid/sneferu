@@ -56,7 +56,9 @@ public class ScreenTestAPI<S extends Screen, THIS extends ScreenTestAPI> impleme
 
   public <C extends Component, F extends ComponentTestAPI<C>> C rawComponent(
       ComponentDescriptor<C, F> componentDescriptor) {
-    return (C) screen.getWindow().getComponentNN(componentDescriptor.getId());
+    return (C) screen()
+        .getWindow()
+        .getComponentNN(componentDescriptor.getId());
   }
 
 
