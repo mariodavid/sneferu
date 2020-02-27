@@ -140,6 +140,10 @@ class FirstSneferuSpec extends Specification {
 }
 ```
 
+Instead of using `com.haulmont.cuba.web.testsupport.TestUiEnvironment` a Sneferu specific environment is used: `de.diedavids.sneferu.environment.SneferuTestUiEnvironment`
+
+This environment class has an additional parameter, that needs to be provided: `withMainScreen()`, where the Main Screen of the application is configured.
+
 ### Example Usage
 
 A dedicated example of using Sneferu is shown via the CUBA Petclinic sample application: [cuba-platform/cuba-petclinic-using-sneferu](https://github.com/cuba-platform/cuba-petclinic-using-sneferu).
