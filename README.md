@@ -25,6 +25,10 @@ What does Sneferu _not cover_:
 * End-to-End Service execution (middleware)
 * Client-Side Vaadin UI logic that is executed only in the browser
 
+#### Sneferu Landscape
+
+![Sneferu Landscape](img/sneferu-landscape.png)
+
 If you can live with those trade-offs feel free to join the lovely world of web integration testing in CUBA expressed though a beautiful API.
 
 #### Motivation & Background
