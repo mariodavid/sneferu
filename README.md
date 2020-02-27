@@ -27,7 +27,7 @@ What does Sneferu _not cover_:
 
 #### Sneferu Landscape
 
-![Sneferu Landscape](img/sneferu-landscape.png)
+![Sneferu Landscape](img/sneferu-overview.png)
 
 If you can live with those trade-offs feel free to join the lovely world of web integration testing in CUBA expressed though a beautiful API.
 
