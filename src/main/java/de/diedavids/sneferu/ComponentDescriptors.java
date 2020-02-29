@@ -26,7 +26,7 @@ import de.diedavids.sneferu.components.descriptor.TreeDataGridComponentDescripto
  *
  * Normally should be included via a static import like:
  *
- * > import static de.diedavids.sneferu.ComponentDescriptors.*
+ * &gt; import static de.diedavids.sneferu.ComponentDescriptors.*
  */
 public class ComponentDescriptors {
 

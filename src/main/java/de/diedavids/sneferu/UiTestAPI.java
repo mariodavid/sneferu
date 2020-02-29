@@ -34,6 +34,7 @@ public interface UiTestAPI {
    *
    * @param screenEditorClass the type of the Standard Editor Screen
    * @param <S> the type of the Screen
+   * @param <E> type of the Entity
    *
    * @return an instance of the Test API
    */
@@ -54,6 +55,7 @@ public interface UiTestAPI {
    *
    * @param screenLookupClass the type of the Standard Lookup Screen
    * @param <S> the type of the Screen
+   * @param <E> type of the Entity
    *
    * @return an instance of the Test API
    */

@@ -20,7 +20,7 @@ import de.diedavids.sneferu.interactions.SetValueInteraction;
  *
  * Normally should be included via a static import like:
  *
- * > import static de.diedavids.sneferu.Interactions.*
+ * &gt;s import static de.diedavids.sneferu.Interactions.*
  */
 public class Interactions {
 
