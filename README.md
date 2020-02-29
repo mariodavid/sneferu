@@ -1,13 +1,17 @@
 ## Sneferu
 
 Sneferu is a testing library to simplify web integration testing for a CUBA application.
-It consists of a couple of APIs that allows the application developer to express interactions 
-and verifications with UI screens via a fluent API. 
+It consists of a couple of APIs that allows you to express interactions and verifications 
+with UI screens via a dedicated high-level testing language. 
 
 
 ### Overview
 
-Instead of spending too much time and money maintaining a selenium test suite, Sneferu is the way to have a very good test coverage and quality assurance at a fraction of the cost.
+Instead of spending too much time and money maintaining a selenium test suite, Sneferu is the way 
+to have a very good test coverage and quality assurance at a fraction of the cost.
+
+Via its easy to read language you can create integration tests that are optimized for readability,
+because this is what matters most for keeping a test suite maintainable & cheap to operate.
 
 Using Sneferu it enables you to:
  

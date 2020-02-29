@@ -1,14 +1,55 @@
 plugins {
     id 'java'
     id 'groovy'
+    id 'net.researchgate.release' version '2.8.1'
+    id  'com.jfrog.bintray' version "1.8.4"
 }
 
 apply plugin: "maven"
 
 group 'de.diedavids.sneferu'
-version '0.1-SNAPSHOT'
+version project.properties['version']
 
 sourceCompatibility = 1.8
+
+
+bintray {
+    user = System.getenv('BINTRAY_USERNAME')
+    key = System.getenv('BINTRAY_PASSWORD')
+
+    configurations = ['archives']
+
+    publish = true
+
+    override = false
+
+    // metadata
+    pkg {
+        repo = 'cuba-components'
+        name = 'sneferu'
+        desc = 'Web Integration Testing Library'
+        userOrg = 'mariodavid'
+
+        websiteUrl = 'https://github.com/mariodavid/sneferu'
+        issueTrackerUrl = 'https://github.com/mariodavid/sneferu/issues'
+        vcsUrl = 'https://github.com/mariodavid/sneferu.git'
+
+        licenses = ["Apache-2.0"]
+
+        labels = ['sneferu', 'cuba-patform', 'cuba-component', 'integration-testing']
+        githubRepo = 'mariodavid/sneferu'
+        githubReleaseNotesFile = 'CHANGELOG.md'
+
+        version {
+            name = "${rootProject.version}"
+            desc = ''
+            released = new Date()
+            vcsTag = "${rootProject.version}"
+        }
+    }
+}
+
+
 
 repositories {
     mavenCentral()
@@ -57,3 +98,5 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+
