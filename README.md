@@ -103,6 +103,14 @@ configure(webModule) {
 }
 ```
 
+| CUBA Platform Version | Add-on Version |
+| --------------------- | -------------- |
+| 7.2.x                 | 0.1.x          |
+
+
+The latest version is: [ ![Download](https://api.bintray.com/packages/mariodavid/cuba-components/sneferu/images/download.svg) ](https://bintray.com/mariodavid/cuba-components/sneferu/_latestVersion)
+
+
 Sneferu can be used with JUnit as well as Spock. Just add the corresponding dependencies into your CUBA project in order to use it with either of those frameworks.
 
 Afterwards you can create your first web integration test:
