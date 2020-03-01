@@ -1,18 +1,13 @@
 package de.diedavids.sneferu.environment;
 
-import com.haulmont.cuba.client.ClientUserSession;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Metadata;
-import com.haulmont.cuba.core.global.UserSessionSource;
 import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.config.WindowConfig;
-import com.haulmont.cuba.gui.sys.UiControllersConfiguration;
-import com.haulmont.cuba.security.global.UserSession;
 import com.haulmont.cuba.security.role.RoleDefinition;
 import com.haulmont.cuba.web.app.main.MainScreen;
 import com.haulmont.cuba.web.testsupport.TestContainer;
 import com.haulmont.cuba.web.testsupport.TestUiEnvironment;
-import com.haulmont.cuba.web.testsupport.ui.TestWindowConfig;
 import de.diedavids.sneferu.CubaWebUiTestAPI;
 import de.diedavids.sneferu.UiTestAPI;
 import de.diedavids.sneferu.screen.StandardEditorTestAPI;
@@ -20,7 +15,6 @@ import de.diedavids.sneferu.screen.StandardLookupTestAPI;
 import java.lang.reflect.Parameter;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.Arrays;
 import java.util.Locale;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
@@ -38,35 +32,6 @@ public class SneferuTestUiEnvironment extends TestUiEnvironment implements
         super(container);
     }
 
-    // todo temporary workaround to use full access role by default
-    @Override
-    protected void setupSession() {
-
-        sessionSource = container.getBean(UserSessionSource.NAME);
-
-        UserSession serverSession = sessionSource.createTestSession();
-        ClientUserSession session = new ClientUserSession(serverSession);
-        session.setAuthenticated(isSessionAuthenticated());
-
-        sessionSource.setSession(session);
-    }
-
-    // we need to add extended screens as a separate configuration otherwise we'll get duplication exception
-    @Override
-    protected void exportScreens(String... packages) {
-        TestWindowConfig windowConfig = container.getBean(TestWindowConfig.class);
-
-        UiControllersConfiguration configuration = new UiControllersConfiguration();
-        getInjector().autowireBean(configuration);
-        configuration.setBasePackages(Arrays.asList(packages));
-
-        UiControllersConfiguration testConf = new UiControllersConfiguration();
-        getInjector().autowireBean(testConf);
-        testConf.setBasePackages(Arrays.asList("com.haulmont.sample.petclinic.testscreens"));
-
-        windowConfig.setConfigurations(Arrays.asList(configuration, testConf));
-        windowConfig.reset();
-    }
 
     @Override
     protected void before() throws Throwable {
@@ -147,14 +112,23 @@ public class SneferuTestUiEnvironment extends TestUiEnvironment implements
     }
 
 
+    /**
+     * Overrides main screen that will be used when interacting with Screens
+     *
+     * @param mainScreenClass the class of the MainScreen of the application
+     * @return this
+     */
     public SneferuTestUiEnvironment withMainScreen(Class<? extends MainScreen> mainScreenClass) {
         this.mainScreenClass = mainScreenClass;
         return this;
     }
 
 
-
-
+    /**
+     * returns an instance of the {@see UiTestAPI}
+     *
+     * @return the UiTestAPI instance
+     */
     public UiTestAPI getUiTestAPI() {
         return uiTestAPI;
     }
