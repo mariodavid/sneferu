@@ -19,7 +19,7 @@ import java.lang.annotation.Target;
  *<pre>{@code
  * @Test
  * public void myJunit5Test(
- *   @StartScreen StandardLookupTestAPI<Visit,VisitBrowse> visitBrowse
+ *   @StartScreen StandardLookupTestAPI&lt;Visit,VisitBrowse&gt; visitBrowse
  *   ) {
  *
  *   visitBrowse.interact(click(button("createBtn")));

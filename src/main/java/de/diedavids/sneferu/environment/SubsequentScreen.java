@@ -23,8 +23,8 @@ import java.lang.annotation.Target;
  *<pre>{@code
  * @Test
  * public void myJunit5Test(
- *   @StartScreen StandardLookupTestAPI<Visit,VisitBrowse> visitBrowse,
- *   @SubsequentScreen StandardEditorTestAPI<Visit, VisitEdit> visitEdit
+ *   @StartScreen StandardLookupTestAPI&lt;Visit,VisitBrowse&gt; visitBrowse,
+ *   @SubsequentScreen StandardEditorTestAPI&lt;Visit, VisitEdit&gt; visitEdit
  *   ) {
  *
  *   // when: visitBrowse screen was opened through the test at the beginning of the test case
