@@ -34,7 +34,7 @@ import java.lang.annotation.Target;
  *   // therefore, it is not possible to interact with visitEdit.
  *   //
  *   // In case the screen has not been opened up until now, the interaction will fail
- *   // with a {@see ScreenNotOpenException}
+ *   // with a ScreenNotOpenException
  *
  *   visitEdit
  *         .interact(enter(dateField("visitDateField"), new Date()))
