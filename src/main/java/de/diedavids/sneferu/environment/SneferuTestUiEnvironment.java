@@ -125,7 +125,7 @@ public class SneferuTestUiEnvironment extends TestUiEnvironment implements
 
 
     /**
-     * returns an instance of the {@see UiTestAPI}
+     * returns an instance of the UiTestAPI
      *
      * @return the UiTestAPI instance
      */

@@ -17,9 +17,9 @@ import java.lang.annotation.Target;
  * Example usage:
  *
  *<pre>{@code
- * @Test
+ * &#64;Test
  * public void myJunit5Test(
- *   @StartScreen StandardLookupTestAPI&lt;Visit,VisitBrowse&gt; visitBrowse
+ *   &#64;StartScreen StandardLookupTestAPI&lt;Visit,VisitBrowse&gt; visitBrowse
  *   ) {
  *
  *   visitBrowse.interact(click(button("createBtn")));

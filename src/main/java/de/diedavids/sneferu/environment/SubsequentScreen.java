@@ -21,10 +21,10 @@ import java.lang.annotation.Target;
  * Example usage:
  *
  *<pre>{@code
- * @Test
+ * &#64;Test
  * public void myJunit5Test(
- *   @StartScreen StandardLookupTestAPI&lt;Visit,VisitBrowse&gt; visitBrowse,
- *   @SubsequentScreen StandardEditorTestAPI&lt;Visit, VisitEdit&gt; visitEdit
+ *   &#64;StartScreen StandardLookupTestAPI&lt;Visit,VisitBrowse&gt; visitBrowse,
+ *   &#64;SubsequentScreen StandardEditorTestAPI&lt;Visit, VisitEdit&gt; visitEdit
  *   ) {
  *
  *   // when: visitBrowse screen was opened through the test at the beginning of the test case

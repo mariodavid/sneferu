@@ -15,8 +15,8 @@ import java.lang.annotation.Target;
  * Example usage:
  *
  *<pre>{@code
- * @Test
- * public void myJunit5Test(@NewEntity Pet pikachu) {
+ * &#64;Test
+ * public void myJunit5Test(&#64;NewEntity Pet pikachu) {
  *   pikachu.setName("Pikachu")
  * }
  *}</pre>
