@@ -1,16 +1,15 @@
 ## Sneferu
 
 Sneferu is a testing library to simplify web integration testing for a CUBA application.
-It consists of a couple of APIs that allows you to express interactions and verifications 
-with UI screens via a dedicated high-level testing language. 
+It consists of a couple of APIs that allows you to express interactions and verifications with UI screens via a dedicated high-level testing language. 
 
 
 ### Overview
 
 Instead of spending too much time and money maintaining a selenium test suite, Sneferu is the way 
-to have a very good test coverage and quality assurance at a fraction of the cost.
+to have very good test coverage and quality assurance at a fraction of the cost.
 
-Via its easy to read language you can create integration tests that are optimized for readability,
+Via its easy to read the language you can create integration tests that are optimized for readability,
 because this is what matters most for keeping a test suite maintainable & cheap to operate.
 
 Using Sneferu it enables you to:
@@ -21,7 +20,7 @@ Using Sneferu it enables you to:
 * emulate & verify data loading  
 * emulate & verify Service Interface interactions
 
-As Sneferu is based on the web integration test facilities of CUBA, there are certain limitation in what areas are not covered. In particular Sneferu relies on the abstractions provided by the CUBA and Vaadin component interfaces. It assumes that behind this interface everything "works as expected". 
+As Sneferu is based on the web integration test facilities of CUBA, there is a certain limitation in what areas are not covered. In particular, Sneferu relies on the abstractions provided by the CUBA and Vaadin component interfaces. It assumes that behind this interface everything "works as expected". 
 
 What does Sneferu _not cover_:
 
@@ -39,14 +38,14 @@ If you can live with those trade-offs feel free to join the lovely world of web 
 
 Testing of a CUBA application on the web layer previously consists of two extremes:
 
-1. write unit test for the business logic in the screen controllers
+1. write a unit test for the business logic in the screen controllers
 2. write a functional UI test that executes the application through the browser
 
 Both of those extremes have their downsides.
 
-The first one requires to mock out every programmatic interaction with the CUBA UI interfaces. Also unit test do not cover any of the screen layout definitions or the data binding of a Screen.
+The first one requires to mock out every programmatic interaction with the CUBA UI interfaces. Also, unit tests do not cover any of the screen layout definitions or the data binding of a Screen.
 
-Selenium based UI testing on the other hand is much more black-box, slower, more brittle and overall harder to maintain. It can achieve a higher degree of confidence of correctness, as it exercises the application almost like the user does. But this trade off is a very expensive one. 
+Selenium-based UI testing, on the other hand, is much more black-box, slower, more brittle and overall harder to maintain. It can achieve a higher degree of confidence that the application behaves as it is supposed to be, as it exercises the application almost as the user does. But this trade-off is a very expensive one. 
 
 To mitigate that problem CUBA 7.1 introduced web integration testing.
 
@@ -92,7 +91,7 @@ public class VisitBrowseToEditTest {
 
 ### Getting Started
 
-In order to use Sneferu, it is required to add the dependency to the CUBA project. In the `build.gradle` the following dependency has to added to the web-module:
+To use Sneferu, it is required to add the dependency to the CUBA project. In the `build.gradle` the following dependency has to add to the web-module:
 
 ```groovy
 configure(webModule) {
@@ -111,9 +110,9 @@ configure(webModule) {
 The latest version is: [ ![Download](https://api.bintray.com/packages/mariodavid/cuba-components/sneferu/images/download.svg) ](https://bintray.com/mariodavid/cuba-components/sneferu/_latestVersion)
 
 
-Sneferu can be used with JUnit as well as Spock. Just add the corresponding dependencies into your CUBA project in order to use it with either of those frameworks.
+Sneferu can be used with JUnit as well as Spock. Just add the corresponding dependencies into your CUBA project to use it with either of those frameworks.
 
-Afterwards you can create your first web integration test:
+Afterward, you can create your first web integration test:
 
 ```groovy
 import de.diedavids.sneferu.UiTestAPI
@@ -158,7 +157,7 @@ class FirstSneferuSpec extends Specification {
 
 Instead of using `com.haulmont.cuba.web.testsupport.TestUiEnvironment` a Sneferu specific environment is used: `de.diedavids.sneferu.environment.SneferuTestUiEnvironment`
 
-This environment class has an additional parameter, that needs to be provided: `withMainScreen()`, where the Main Screen of the application is configured.
+This environment-class has an additional parameter, that needs to be provided: `withMainScreen()`, where the Main Screen of the application is configured.
 
 ### Example Usage
 
@@ -180,7 +179,7 @@ Let's go through them one by one.
 
 ### UI Test API
 
-The UI Test API is the interaction point in the test case that manages screens. It allows to open / close screens and retrieve information about opened screens. It can be accessed through the `environment` instance via its method `getUiTestAPI()`. An example of its usage looks like this:
+The UI Test API is the interaction point in the test case that manages screens. The API allows the developer to open/close screens and retrieve information about opened screens. It can be accessed through the `environment` instance via its method `getUiTestAPI()`. An example of its usage looks like this:
 
 ```groovy
 def "UI Test API usage"() {
@@ -227,10 +226,10 @@ class JUnit5TestInjection {
 }
 ```
 
-In this case the test case just expresses its dependencies for the screens that should be used. There are two variants to it:
+In this case, the test case just expresses its dependencies for the screens that should be used. There are two variants to it:
 
 * `@StartScreen` is used when a screen should be injected that needs to be started on. In case the screen is not already open in the application, it is not possible to inject it
-* `@SubsequentScreen` is used when a screen should be injected in the test, but is currently not already opened. In this case the screen fetching from the application is postponed until the first interaction  
+* `@SubsequentScreen` is used when a screen should be injected in the test but is currently not already opened. In this case, the screen fetching from the application is postponed until the first interaction  
 
 ### Screen Test API
 
@@ -239,9 +238,9 @@ The next concept of Sneferu allows to interact with a particular Screen and is c
 1. apply interactions (see [Interactions](#Interactions)) on a particular screen
 2. retrieve components of a screen to interact with those through its [Component Test API](#Component-Test-API)
 
-In order to interact with the `ScreenTestAPI` an instance of that must be retrieved via the `UiTestAPI` as described above. Once those instances are available (`customerBrowse` and `customerWithTabsEdit` in the following example), the API can be used to interact with a Screen via its Test API directly in the test case.
+To interact with the `ScreenTestAPI` an instance of that must be retrieved via the `UiTestAPI` as described above. Once those instances are available (`customerBrowse` and `customerWithTabsEdit` in the following example), the API can be used to interact with a Screen via its Test API directly in the test case.
 
-A usage of this looks like this:
+Usage of this looks like this:
 
 ```groovy
 def "Screen Test API usage"() {
@@ -264,11 +263,11 @@ More information on what Interactions are and how they can be used can be found 
 An extension of the ScreenTestAPI is the concept of a Screen Object.
 
 Instead of using the API directly through the TestScreenAPI, it is also possible to create a [Screen Object](https://martinfowler.com/bliki/PageObject.html)
-that represents the API of a particular Screen of the UI. This allows to create a dedicated abstraction between the test case and the screen that is under test.
+that represents the API of a particular Screen of the UI. This allows creating a dedicated abstraction between the test case and the screen that is under test.
 
 ##### Definition of a Screen Object (CustomerBrowseScreenObject)
 
-In order to create a ScreenObject, a class needs to be created representing one screen (in this case `CustomerBrowse`). It furthermore needs to implement the interface `ScreenObject<T extends ScreenTestAPI>`. 
+To create a ScreenObject, a class needs to be created representing one screen (in this case `CustomerBrowse`). It furthermore needs to implement the interface `ScreenObject<T extends ScreenTestAPI>`. 
 
 ```java
 public class CustomerBrowseScreenObject implements 
@@ -347,13 +346,13 @@ def "screens can be used through its Screen Object Test API"() {
 }
 ```
 
-This variant allows to have a higher abstraction in the test case. It also decouples the test cases from the API of the Screen itself.
+This variant allows having a higher abstraction in the test case. It also decouples the test cases from the API of the Screen itself.
 
 ### Component Test API
 
-The next concept of Sneferu is the Component Test API. This API is basically the same thing for a `Component` what the `ScreenTestAPI` is for a CUBA Screen. It is an abstraction on top of the CUBA `Component` APIs that is designed in the context of testing.
+The next concept of Sneferu is the Component Test API. This API is the same thing for a `Component` what the `ScreenTestAPI` is for a CUBA Screen. It is an abstraction on top of the CUBA `Component` APIs that is designed in the context of testing.
 
-In order to use an instance of a Component Test API, it has to be created in the test case (or the Screen Object) via its factory method:
+To use an instance of a Component Test API, it has to be created in the test case (or the Screen Object) via its factory method:
 
 ````groovy
 import static de.diedavids.sneferu.ComponentDescriptors.*
@@ -367,16 +366,16 @@ customerBrowse
 
 `suggestionField` is a factory method that is statically imported from the `ComponentDescriptors` class. The parameter `customerSearchField` is the ID of the field used in the Screen XML descriptor.
 
-It returns an instance of a subclass of `ComponentDescriptor`. In this case it returns an instance of `SuggestionFieldComponentDescriptor` which is aware of the specifics of this component (like searching the value via its `search` method).
+It returns an instance of a subclass of `ComponentDescriptor`. In this case, it returns an instance of `SuggestionFieldComponentDescriptor` which is aware of the specifics of this component (like searching the value via its `search` method).
 
 
 #### Support custom components
 
-Sneferu currently does not support all Components of CUBA. Furthermore if you use application specific components or composite components, Sneferu also can not support them out of the box.
+Sneferu currently does not support all Components of CUBA. Furthermore, if you use application-specific components or composite components, Sneferu also can not support them out of the box.
 
 Therefore it is possible to create custom Component Descriptors, that represent the Component in the testing scenario.
 
-In order to support a new component, first a subclass of `ComponentTestAPI` needs to be created:
+To support a new component, first a subclass of `ComponentTestAPI` needs to be created:
 
 ```java
 public class SliderTestAPI extends GenericComponentTestAPI<Slider> {
@@ -391,7 +390,7 @@ public class SliderTestAPI extends GenericComponentTestAPI<Slider> {
 }
 ```
 
-With that component specific Test API in place, a `ComponentDescriptor` can be created that is responsible for this `SliderTestAPI`:
+With that component-specific Test API in place, a `ComponentDescriptor` can be created that is responsible for this `SliderTestAPI`:
 
 ```java
 public class SliderComponentDescriptor
@@ -428,7 +427,7 @@ With those three steps, the custom component like the `Slider` in this example c
 
 ### Interactions
 
-The last remaining concept of Sneferu is the Interactions APIs. Interactions are what brings the screens to life. An interaction reflects any action a user would normally do manually to trigger some behavior or validate some result.
+The last remaining concept of Sneferu is the Interactions APIs. Interactions are what bring the screens to life. An interaction reflects any action a user would normally do manually to trigger some behavior or validate some result.
 
 An interaction usage looks like this:
 
@@ -465,7 +464,7 @@ All interactions can be created via its Factory: `de.diedavids.sneferu.Interacti
 There are two types of Interactions:
 
 #### Chainable Interactions 
-Chainable interactions are interactions that can be combined together via the `ScreenTestAPI` and with that represent a list of steps that should be executed against a Screen.
+Chainable interactions are interactions that can be combined via the `ScreenTestAPI` and with that represent a list of steps that should be executed against a Screen.
 
 Those interactions do not have an outcome that can be retrieved programmatically in the test case. Examples of that are `click`, `select`, `openTab` etc.
 
@@ -513,7 +512,7 @@ Terminating Interactions can be invoked via one of the following alias methods i
 
 #### Using different Interactions
 
-Here is an example on how to use the two different types of interactions in a test case:
+Here is an example of how to use the two different types of interactions in a test case:
 
 ```groovy
 import static de.diedavids.sneferu.ComponentDescriptors.*
@@ -540,7 +539,7 @@ def "Chainable Interactions can be combined to perform a series of steps"() {
 
 #### Custom Interactions
 
-It is possible to define custom interaction that are not included in the Sneferu library (yet).
+It is possible to define a custom Interaction that is not included in the Sneferu library (yet).
 
 Taking the Slider example from above: the first step is to create a class defining the Interaction:
 
