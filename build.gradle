@@ -61,13 +61,13 @@ repositories {
 }
 
 ext {
-    vaadinVersion = "8.9.2-2-cuba"
+    vaadinVersion = "8.9.2-3-cuba"
 }
 
 dependencies {
 
-    compile 'com.haulmont.cuba:cuba-gui:7.2.0.BETA2'
-    compile 'com.haulmont.cuba:cuba-web-tests:7.2.0.BETA2'
+    compile 'com.haulmont.cuba:cuba-gui:7.2.0'
+    compile 'com.haulmont.cuba:cuba-web-tests:7.2.0'
 
     /* Vaadin */
     compile("com.vaadin:vaadin-server:${vaadinVersion}") {
@@ -76,7 +76,6 @@ dependencies {
     compile("com.vaadin:vaadin-compatibility-server:${vaadinVersion}") {
         exclude(group: 'com.vaadin', module: 'vaadin-sass-compiler')
     }
-    //compile("com.vaadin:vaadin-push:${vaadinVersion}")
 
 
     testCompile 'org.slf4j:slf4j-simple:1.7.25'
