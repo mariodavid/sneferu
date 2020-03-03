@@ -105,7 +105,7 @@ configure(webModule) {
 
 | CUBA Platform Version | Add-on Version |
 | --------------------- | -------------- |
-| 7.2.x                 | 0.1.x          |
+| 7.2.x                 | 0.2.x          |
 
 
 The latest version is: [ ![Download](https://api.bintray.com/packages/mariodavid/cuba-components/sneferu/images/download.svg) ](https://bintray.com/mariodavid/cuba-components/sneferu/_latestVersion)
