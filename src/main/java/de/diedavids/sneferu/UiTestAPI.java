@@ -48,6 +48,11 @@ public interface UiTestAPI {
   );
 
 
+  <E extends Entity, S extends StandardLookup<E>> StandardLookupTestAPI<E, S> getLazyOpenedLookupScreen(
+      Class<S> screenLookupClass
+  );
+
+
   /**
    * returns a Test API instance for a given Standard Lookup Screen class if screen is opened.
    *

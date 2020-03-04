@@ -1,7 +1,8 @@
-package de.diedavids.sneferu;
+package de.diedavids.sneferu.uitestapi;
 
 import static de.diedavids.sneferu.ComponentDescriptors.button;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -13,9 +14,14 @@ import com.haulmont.cuba.gui.components.Window;
 import com.haulmont.cuba.gui.screen.Screen;
 import com.haulmont.cuba.web.app.main.MainScreen;
 import com.haulmont.cuba.web.testsupport.TestUiEnvironment;
+import de.diedavids.sneferu.CubaWebUiTestAPI;
+import de.diedavids.sneferu.ScreenNotOpenException;
+import de.diedavids.sneferu.UiTestAPI;
 import de.diedavids.sneferu.example.Customer;
 import de.diedavids.sneferu.example.CustomerStandardEditor;
+import de.diedavids.sneferu.example.CustomerStandardLookup;
 import de.diedavids.sneferu.screen.StandardEditorTestAPI;
+import de.diedavids.sneferu.screen.StandardLookupTestAPI;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -45,6 +51,29 @@ class UiTestAPITest {
         screenBuilders,
         MainScreen.class
     );
+  }
+
+  @Nested
+  class OpenedInputDialog {
+
+
+    @Test
+    public void given_noInputDialogIsOpen_when_openedInputDialogIsRequested_thenScreenNotFoundExceptionIsRaised() {
+
+      // given:
+      dialogScreens()
+          .thenReturn(
+              noOpenScreens()
+          );
+      // when:
+
+      ScreenNotOpenException exception = assertThrows(ScreenNotOpenException.class, () -> {
+        sut.openedInputDialog();
+      });
+
+      // then:
+      assertThat(exception).isNotNull();
+    }
   }
 
   @Test
@@ -95,9 +124,43 @@ class UiTestAPITest {
         .isEqualTo(okBtn);
   }
 
+  @Test
+  void given_screenIsNotOpen_when_aLazyOpenedStandardLookup_anInstanceIsReturnedThatTriesToFetchTheScreenOnTheFly_whenRequestingComponent() {
+
+    // given:
+    final CustomerStandardLookup foundCustomerLookup = mock(CustomerStandardLookup.class);
+
+    // and:
+    final Window screenWindow = mock(Window.class);
+    when(foundCustomerLookup.getWindow())
+        .thenReturn(screenWindow);
+
+    // and:
+    final Button okBtn = mock(Button.class);
+    when(screenWindow.getComponentNN("okBtn"))
+        .thenReturn(okBtn);
+
+    allScreens()
+        .thenReturn(
+            noOpenScreens()
+        )
+        .thenReturn(
+            openScreens(foundCustomerLookup)
+        );
+
+    // expect:
+    assertThat(lazyOpenedStandardLookupScreen().rawComponent(button("okBtn")))
+        .isEqualTo(okBtn);
+  }
+
   private StandardEditorTestAPI<Customer, CustomerStandardEditor> lazyOpenedEditorScreen() {
     return sut
         .getLazyOpenedEditorScreen(CustomerStandardEditor.class);
+  }
+
+  private StandardLookupTestAPI<Customer, CustomerStandardLookup> lazyOpenedStandardLookupScreen() {
+    return sut
+        .getLazyOpenedLookupScreen(CustomerStandardLookup.class);
   }
 
 
@@ -121,61 +184,15 @@ class UiTestAPITest {
     return when(openedScreens.getAll());
   }
 
-  @Nested
-  class IsActive {
 
-    private CustomerStandardEditor editor;
-
-    @BeforeEach
-    void setUp() {
-      editor = new CustomerStandardEditor();
-    }
-
-    @Test
-    void given_screenIsOpen_expect_isActiveIsTrue() {
-
-      // given:
-      activeScreens()
-          .thenReturn(
-              openScreens(editor)
-          );
-
-      // expect:
-      assertThat(
-          sut.isActive(testAPI(editor))
-      ).isTrue();
-
-    }
-    @Test
-    void given_screenIsNotOpen_expect_isActiveIsFalse() {
-
-      // given:
-      activeScreens()
-          .thenReturn(
-              noOpenScreens()
-          );
-
-      // expect:
-      assertThat(
-          sut.isActive(testAPI(editor))
-      ).isFalse();
-
-    }
-
-    private StandardEditorTestAPI<Customer, CustomerStandardEditor> testAPI(
-        CustomerStandardEditor foundCustomerEditor) {
-      return (StandardEditorTestAPI<Customer, CustomerStandardEditor>) new StandardEditorTestAPI(Customer.class, foundCustomerEditor);
-    }
-
+  private OngoingStubbing<Collection<Screen>> dialogScreens() {
+    return when(openedScreens.getDialogScreens());
   }
 
-  private OngoingStubbing<Collection<Screen>> activeScreens() {
-    return when(openedScreens.getActiveScreens());
-  }
 
-  private List<Screen> openScreens(CustomerStandardEditor foundCustomerEditor) {
+  private List<Screen> openScreens(Screen screen) {
     return Collections.singletonList(
-        foundCustomerEditor
+        screen
     );
   }
 

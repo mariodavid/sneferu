@@ -68,12 +68,33 @@ public class CubaWebUiTestAPI implements UiTestAPI {
         Class<S> screenEditorClass
     ) {
         final Optional<StandardEditorTestAPI<E, S>> optionalScreen = tryToOpenStandardEditor(
-            screenEditorClass);
+            screenEditorClass
+        );
 
         return optionalScreen.orElseGet(() -> new StandardEditorTestAPI<E, S>(
             screenEditorClass, () -> {
             final Optional<StandardEditorTestAPI<E, S>> optionalScreen2 = tryToOpenStandardEditor(
                 screenEditorClass);
+
+            return optionalScreen2
+                .map(ScreenTestAPI::screen)
+                .orElseThrow(ScreenNotOpenException::new);
+        }));
+    }
+
+    @Override
+    public <E extends Entity, S extends StandardLookup<E>> StandardLookupTestAPI<E, S> getLazyOpenedLookupScreen(
+        Class<S> screenLookupClass
+    ) {
+        final Optional<StandardLookupTestAPI<E, S>> optionalScreen = tryToOpenStandardLookup(
+            screenLookupClass
+        );
+
+        return optionalScreen.orElseGet(() -> new StandardLookupTestAPI<E, S>(
+            screenLookupClass, () -> {
+            final Optional<StandardLookupTestAPI<E, S>> optionalScreen2 = tryToOpenStandardLookup(
+                screenLookupClass
+            );
 
             return optionalScreen2
                 .map(ScreenTestAPI::screen)
@@ -89,6 +110,21 @@ public class CubaWebUiTestAPI implements UiTestAPI {
         if (screen instanceof StandardEditor) {
             S castedScreen = (S) screen;
             return Optional.of(new StandardEditorTestAPI(screenEditorClass, castedScreen));
+        }
+        else {
+            return Optional.empty();
+        }
+    }
+
+
+    private <E extends Entity, S extends StandardLookup<E>> Optional<StandardLookupTestAPI<E,S>> tryToOpenStandardLookup(
+        Class<S> screenEditorClass
+    ) {
+        Screen screen = getLastOpenedScreen();
+
+        if (screen instanceof StandardLookup) {
+            S castedScreen = (S) screen;
+            return Optional.of(new StandardLookupTestAPI(screenEditorClass, castedScreen));
         }
         else {
             return Optional.empty();
@@ -202,6 +238,6 @@ public class CubaWebUiTestAPI implements UiTestAPI {
                 .filter(screen -> InputDialog.class.isAssignableFrom(screen.getClass()))
                 .findFirst()
                 .map(screen -> new InputDialogTestAPI(InputDialog.class, (InputDialog) screen))
-                .orElse(null);
+                .orElseThrow(ScreenNotOpenException::new);
     }
 }
