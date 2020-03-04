@@ -102,6 +102,18 @@ configure(webModule) {
 }
 ```
 
+Additionally the Maven repository `https://dl.bintray.com/mariodavid/cuba-components` has to be added to the list of available repositories of the project (`build.gradle`):
+
+```groovy
+repositories {
+        
+        // ...
+        maven {
+            url  "https://dl.bintray.com/mariodavid/cuba-components"
+        }
+        // ...
+    }
+```
 | CUBA Platform Version | Add-on Version |
 | --------------------- | -------------- |
 | 7.2.x                 | 0.2.x          |
