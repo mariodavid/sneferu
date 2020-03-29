@@ -9,6 +9,8 @@ import com.haulmont.cuba.web.testsupport.TestContainer;
 import com.haulmont.cuba.web.testsupport.proxy.DataServiceProxy;
 
 import java.util.*;
+import java.util.Map.Entry;
+import java.util.function.Predicate;
 
 public class ControllableDataServiceProxy extends DataServiceProxy {
 
@@ -43,14 +45,26 @@ public class ControllableDataServiceProxy extends DataServiceProxy {
     public Set<Entity> commit(CommitContext context) {
         Set<Entity> committedEntities = super.commit(context);
 
-        committedEntities.stream()
-                .forEach(entity -> this.committedEntities.put(entity.getId(), entity));
+        persistCommit(committedEntities);
 
         return committedEntities;
     }
 
+    void persistCommit(Set<Entity> committedEntities) {
+        committedEntities.stream()
+                .forEach(entity -> this.committedEntities.put(entity.getId(), entity));
+    }
+
     public <E extends Entity> E committed(Class<E> entityClass, Object entityId) {
         return (E) committedEntities.get(entityId);
+    }
+
+    public <E extends Entity> Optional<E> committed(Class<E> entityClass, Predicate<E> entityPredicate) {
+        return (Optional<E>) committedEntities.entrySet()
+            .stream()
+            .map(Entry::getValue)
+            .filter(entry -> entityPredicate.test((E) entry))
+            .findFirst();
     }
 
 }

@@ -1,6 +1,7 @@
 package de.diedavids.sneferu;
 
 import com.haulmont.cuba.gui.components.Component;
+import com.haulmont.cuba.gui.screen.CloseAction;
 import com.haulmont.cuba.gui.screen.EditorScreen;
 import de.diedavids.sneferu.components.ComponentDescriptor;
 import de.diedavids.sneferu.components.descriptor.TabsheetComponentDescriptor;
@@ -158,6 +159,17 @@ public class Interactions {
      */
     public static CloseInputDialogInteraction closeInputDialog() {
         return new CloseInputDialogInteraction();
+    }
+
+    /**
+     * creates a Close Input Dialog Interaction, that closes an input dialog with a particular close action
+     *
+     * @param closeAction the close action to use
+     *
+     * @return a CloseInputDialogInteraction instance
+     */
+    public static CloseInputDialogInteraction closeInputDialogWith(CloseAction closeAction) {
+        return new CloseInputDialogInteraction(closeAction);
     }
 
 
