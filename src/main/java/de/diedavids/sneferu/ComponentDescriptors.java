@@ -204,4 +204,13 @@ public class ComponentDescriptors {
         return new ColorPickerComponentDescriptor(id);
     }
 
+    /**
+     * creates a {@link SideMenuComponentDescriptor} instance
+     * @param id the id of the component as defined in the screen XML descriptor
+     * @return a SideMenuComponentDescriptor instance
+     */
+    public static SideMenuComponentDescriptor sideMenu(String id) {
+        return new SideMenuComponentDescriptor(id);
+    }
+
 }
