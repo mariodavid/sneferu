@@ -12,6 +12,7 @@ import de.diedavids.sneferu.screen.InputDialogTestAPI;
 import de.diedavids.sneferu.screen.ScreenTestAPI;
 import de.diedavids.sneferu.screen.StandardEditorTestAPI;
 import de.diedavids.sneferu.screen.StandardLookupTestAPI;
+import de.diedavids.sneferu.screen.StandardScreenTestAPI;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -102,6 +103,24 @@ public class CubaWebUiTestAPI implements UiTestAPI {
         }));
     }
 
+    @Override
+    public <S extends Screen> StandardScreenTestAPI<S> getLazyOpenedStandardScreen(Class<S> screenClass) {
+        final Optional<StandardScreenTestAPI<S>> optionalScreen = tryToOpenStandardScreen(
+            screenClass
+        );
+
+        return optionalScreen.orElseGet(() -> new StandardScreenTestAPI<S>(
+            screenClass, () -> {
+            final Optional<StandardScreenTestAPI<S>> optionalScreen2 = tryToOpenStandardScreen(
+                screenClass
+            );
+
+            return optionalScreen2
+                .map(ScreenTestAPI::screen)
+                .orElseThrow(ScreenNotOpenException::new);
+        }));
+    }
+
     private <E extends Entity, S extends StandardEditor<E>> Optional<StandardEditorTestAPI<E,S>> tryToOpenStandardEditor(
         Class<S> screenEditorClass
     ) {
@@ -118,13 +137,28 @@ public class CubaWebUiTestAPI implements UiTestAPI {
 
 
     private <E extends Entity, S extends StandardLookup<E>> Optional<StandardLookupTestAPI<E,S>> tryToOpenStandardLookup(
-        Class<S> screenEditorClass
+        Class<S> screenLookupClass
     ) {
         Screen screen = getLastOpenedScreen();
 
         if (screen instanceof StandardLookup) {
             S castedScreen = (S) screen;
-            return Optional.of(new StandardLookupTestAPI(screenEditorClass, castedScreen));
+            return Optional.of(new StandardLookupTestAPI(screenLookupClass, castedScreen));
+        }
+        else {
+            return Optional.empty();
+        }
+    }
+
+
+    private <S extends Screen> Optional<StandardScreenTestAPI<S>> tryToOpenStandardScreen(
+        Class<S> screenClass
+    ) {
+        Screen screen = getLastOpenedScreen();
+
+        if (screen instanceof Screen) {
+            S castedScreen = (S) screen;
+            return Optional.of(new StandardScreenTestAPI(screenClass, castedScreen));
         }
         else {
             return Optional.empty();
@@ -148,14 +182,14 @@ public class CubaWebUiTestAPI implements UiTestAPI {
     }
 
     @Override
-    public <S extends Screen> ScreenTestAPI<S, ScreenTestAPI> getOpenedScreen(
+    public <S extends Screen> StandardScreenTestAPI<S> getOpenedStandardScreen(
         Class<S> screenClass
     ) {
-
         Screen screen = getLastOpenedScreen();
 
         if (screen != null) {
-            return new ScreenTestAPI(screenClass, screen);
+            S castedScreen = (S) screen;
+            return new StandardScreenTestAPI<>(screenClass, castedScreen);
         }
         else {
             throw new ScreenNotOpenException();
@@ -196,6 +230,17 @@ public class CubaWebUiTestAPI implements UiTestAPI {
                 .withScreenClass(lookupScreenClass)
                 .show();
         return new StandardLookupTestAPI<>(lookupScreenClass, screen);
+    }
+
+    @Override
+    public <S extends Screen> StandardScreenTestAPI<S> openStandardScreen(Class<S> screenClass) {
+
+        final S screen = screenBuilders.screen(rootScreen())
+            .withScreenClass(screenClass)
+            .show();
+
+        return new StandardScreenTestAPI<S>(screenClass, screen);
+
     }
 
 

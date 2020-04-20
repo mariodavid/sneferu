@@ -12,6 +12,7 @@ import de.diedavids.sneferu.CubaWebUiTestAPI;
 import de.diedavids.sneferu.UiTestAPI;
 import de.diedavids.sneferu.screen.StandardEditorTestAPI;
 import de.diedavids.sneferu.screen.StandardLookupTestAPI;
+import de.diedavids.sneferu.screen.StandardScreenTestAPI;
 import java.lang.reflect.Parameter;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -262,6 +263,9 @@ public class SneferuTestUiEnvironment extends TestUiEnvironment implements
                 (Class) actualTypeArguments[0],
                 (Class) actualTypeArguments[1]
             );
+        }
+        else if (StandardScreenTestAPI.class.equals(parameterType)) {
+            return (StandardScreenTestAPI) getUiTestAPI().openStandardScreen((Class)actualTypeArguments[0]);
         }
         else {
             return cannotHandle();

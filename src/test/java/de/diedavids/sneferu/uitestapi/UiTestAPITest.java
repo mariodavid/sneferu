@@ -17,6 +17,7 @@ import com.haulmont.cuba.web.testsupport.TestUiEnvironment;
 import de.diedavids.sneferu.CubaWebUiTestAPI;
 import de.diedavids.sneferu.ScreenNotOpenException;
 import de.diedavids.sneferu.UiTestAPI;
+import de.diedavids.sneferu.example.CustomStandardScreen;
 import de.diedavids.sneferu.example.Customer;
 import de.diedavids.sneferu.example.CustomerStandardEditor;
 import de.diedavids.sneferu.example.CustomerStandardLookup;
@@ -26,6 +27,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.stubbing.OngoingStubbing;
@@ -56,7 +58,6 @@ class UiTestAPITest {
   @Nested
   class OpenedInputDialog {
 
-
     @Test
     public void given_noInputDialogIsOpen_when_openedInputDialogIsRequested_thenScreenNotFoundExceptionIsRaised() {
 
@@ -67,90 +68,194 @@ class UiTestAPITest {
           );
       // when:
 
-      ScreenNotOpenException exception = assertThrows(ScreenNotOpenException.class, () -> {
-        sut.openedInputDialog();
-      });
+      ScreenNotOpenException exception = assertThrows(
+          ScreenNotOpenException.class,
+          () -> sut.openedInputDialog()
+      );
 
       // then:
       assertThat(exception).isNotNull();
     }
   }
 
-  @Test
-  void given_screenIsNotOpen_when_aLazyOpenedStandardEditor_anInstanceIsReturnedThatTriesToFetchTheScreenOnTheFly_whenRequestingScreen() {
+  @Nested
+  @DisplayName("Open Standard Editor")
+  class OpenStandardEditor {
 
-    // given:
-    final CustomerStandardEditor foundCustomerEditor = new CustomerStandardEditor();
+    @Test
+    void when_screenIsNotOpen_then_anInstanceIsReturnedThatTriesToFetchTheScreenOnTheFly_whenRequestingScreen() {
 
-    allScreens()
-        .thenReturn(
-            noOpenScreens()
-        )
-        .thenReturn(
-            openScreens(foundCustomerEditor)
-        );
+      // given:
+      final CustomerStandardEditor foundCustomerEditor = new CustomerStandardEditor();
 
-    // expect:
-    assertThat(lazyOpenedEditorScreen().screen())
-        .isEqualTo(foundCustomerEditor);
+      allScreens()
+          .thenReturn(
+              noOpenScreens()
+          )
+          .thenReturn(
+              openScreens(foundCustomerEditor)
+          );
+
+      // expect:
+      assertThat(lazyOpenedEditorScreen().screen())
+          .isEqualTo(foundCustomerEditor);
+    }
+
+    @Test
+    void given_screenIsNotOpen_when_aLazyOpenedStandardEditor_anInstanceIsReturnedThatTriesToFetchTheScreenOnTheFly_whenRequestingComponent() {
+
+      // given:
+      final CustomerStandardEditor foundCustomerEditor = mock(CustomerStandardEditor.class);
+
+      // and:
+      final Window screenWindow = mock(Window.class);
+      when(foundCustomerEditor.getWindow())
+          .thenReturn(screenWindow);
+
+      // and:
+      final Button okBtn = mock(Button.class);
+      when(screenWindow.getComponentNN("okBtn"))
+          .thenReturn(okBtn);
+
+      allScreens()
+          .thenReturn(
+              noOpenScreens()
+          )
+          .thenReturn(
+              openScreens(foundCustomerEditor)
+          );
+
+      // expect:
+      assertThat(lazyOpenedEditorScreen().rawComponent(button("okBtn")))
+          .isEqualTo(okBtn);
+    }
+
+
+    @Test
+    void given_screenIsOpen_when_aLazyOpenedStandardEditor_anInstanceIsReturned() {
+
+      // given:
+      final CustomerStandardEditor foundCustomerEditor = new CustomerStandardEditor();
+
+      allScreens()
+          .thenReturn(
+              openScreens(foundCustomerEditor)
+          );
+
+      // expect:
+      assertThat(lazyOpenedEditorScreen().screen())
+          .isEqualTo(foundCustomerEditor);
+    }
+
   }
 
-  @Test
-  void given_screenIsNotOpen_when_aLazyOpenedStandardEditor_anInstanceIsReturnedThatTriesToFetchTheScreenOnTheFly_whenRequestingComponent() {
+  @Nested
+  class StandardScreen {
 
-    // given:
-    final CustomerStandardEditor foundCustomerEditor = mock(CustomerStandardEditor.class);
+    @Test
+    void when_screenIsNotOpen_then_anInstanceIsReturnedThatTriesToFetchTheScreenOnTheFly_whenRequestingScreen() {
 
-    // and:
-    final Window screenWindow = mock(Window.class);
-    when(foundCustomerEditor.getWindow())
-        .thenReturn(screenWindow);
+      // given:
+      final CustomStandardScreen customStandardScreen = new CustomStandardScreen();
 
-    // and:
-    final Button okBtn = mock(Button.class);
-    when(screenWindow.getComponentNN("okBtn"))
-        .thenReturn(okBtn);
+      allScreens()
+          .thenReturn(
+              openScreens(customStandardScreen)
+          );
 
-    allScreens()
-        .thenReturn(
-            noOpenScreens()
-        )
-        .thenReturn(
-            openScreens(foundCustomerEditor)
-        );
+      // expect:
+      assertThat(sut.getLazyOpenedStandardScreen(CustomStandardScreen.class).screen())
+          .isEqualTo(customStandardScreen);
+    }
 
-    // expect:
-    assertThat(lazyOpenedEditorScreen().rawComponent(button("okBtn")))
-        .isEqualTo(okBtn);
+    @Test
+    void given_screenIsOpen_when_getOpenedStandardScreen_then_theScreenIsReturned() {
+
+      // given:
+      final CustomStandardScreen customStandardScreen = new CustomStandardScreen();
+
+      allScreens()
+          .thenReturn(
+              openScreens(customStandardScreen)
+          );
+
+      // expect:
+      assertThat(sut.getOpenedStandardScreen(CustomStandardScreen.class).screen())
+          .isEqualTo(customStandardScreen);
+    }
+
+    @Test
+    void given_screenIsNotOpen_when_getOpenedStandardScreen_then_ScreenNotFoundExceptionIsThrown() {
+
+      // given:
+      allScreens()
+          .thenReturn(
+              noOpenScreens()
+          );
+
+      // when:
+      ScreenNotOpenException exception = assertThrows(
+          ScreenNotOpenException.class,
+          () -> sut.getOpenedStandardScreen(CustomStandardScreen.class)
+      );
+
+      // then:
+      assertThat(exception).isNotNull();
+    }
+
+    @Test
+    void given_screenIsNotOpen_when_aLazyOpenedStandardScreen_anInstanceIsReturned() {
+
+      // given:
+      final CustomStandardScreen customStandardScreen = new CustomStandardScreen();
+
+      allScreens()
+          .thenReturn(
+              noOpenScreens()
+          )
+          .thenReturn(
+              openScreens(customStandardScreen)
+          );
+
+      // expect:
+      assertThat(sut.getLazyOpenedStandardScreen(CustomStandardScreen.class).screen())
+          .isEqualTo(customStandardScreen);
+    }
   }
 
-  @Test
-  void given_screenIsNotOpen_when_aLazyOpenedStandardLookup_anInstanceIsReturnedThatTriesToFetchTheScreenOnTheFly_whenRequestingComponent() {
 
-    // given:
-    final CustomerStandardLookup foundCustomerLookup = mock(CustomerStandardLookup.class);
+  @Nested
+  class OpenStandardLookup {
 
-    // and:
-    final Window screenWindow = mock(Window.class);
-    when(foundCustomerLookup.getWindow())
-        .thenReturn(screenWindow);
+    @Test
+    void given_screenIsNotOpen_when_aLazyOpenedStandardLookup_anInstanceIsReturnedThatTriesToFetchTheScreenOnTheFly_whenRequestingComponent() {
 
-    // and:
-    final Button okBtn = mock(Button.class);
-    when(screenWindow.getComponentNN("okBtn"))
-        .thenReturn(okBtn);
+      // given:
+      final CustomerStandardLookup foundCustomerLookup = mock(CustomerStandardLookup.class);
 
-    allScreens()
-        .thenReturn(
-            noOpenScreens()
-        )
-        .thenReturn(
-            openScreens(foundCustomerLookup)
-        );
+      // and:
+      final Window screenWindow = mock(Window.class);
+      when(foundCustomerLookup.getWindow())
+          .thenReturn(screenWindow);
 
-    // expect:
-    assertThat(lazyOpenedStandardLookupScreen().rawComponent(button("okBtn")))
-        .isEqualTo(okBtn);
+      // and:
+      final Button okBtn = mock(Button.class);
+      when(screenWindow.getComponentNN("okBtn"))
+          .thenReturn(okBtn);
+
+      allScreens()
+          .thenReturn(
+              noOpenScreens()
+          )
+          .thenReturn(
+              openScreens(foundCustomerLookup)
+          );
+
+      // expect:
+      assertThat(lazyOpenedStandardLookupScreen().rawComponent(button("okBtn")))
+          .isEqualTo(okBtn);
+    }
+
   }
 
   private StandardEditorTestAPI<Customer, CustomerStandardEditor> lazyOpenedEditorScreen() {
@@ -161,23 +266,6 @@ class UiTestAPITest {
   private StandardLookupTestAPI<Customer, CustomerStandardLookup> lazyOpenedStandardLookupScreen() {
     return sut
         .getLazyOpenedLookupScreen(CustomerStandardLookup.class);
-  }
-
-
-  @Test
-  void given_screenIsOpen_when_aLazyOpenedStandardEditor_anInstanceIsReturned() {
-
-    // given:
-    final CustomerStandardEditor foundCustomerEditor = new CustomerStandardEditor();
-
-    allScreens()
-        .thenReturn(
-            openScreens(foundCustomerEditor)
-        );
-
-    // expect:
-    assertThat(lazyOpenedEditorScreen().screen())
-        .isEqualTo(foundCustomerEditor);
   }
 
   private OngoingStubbing<Collection<Screen>> allScreens() {

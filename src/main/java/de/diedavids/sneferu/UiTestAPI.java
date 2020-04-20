@@ -8,6 +8,7 @@ import de.diedavids.sneferu.screen.InputDialogTestAPI;
 import de.diedavids.sneferu.screen.ScreenTestAPI;
 import de.diedavids.sneferu.screen.StandardEditorTestAPI;
 import de.diedavids.sneferu.screen.StandardLookupTestAPI;
+import de.diedavids.sneferu.screen.StandardScreenTestAPI;
 
 
 /**
@@ -53,6 +54,11 @@ public interface UiTestAPI {
   );
 
 
+  <S extends Screen> StandardScreenTestAPI<S> getLazyOpenedStandardScreen(
+      Class<S> screenClass
+  );
+
+
   /**
    * returns a Test API instance for a given Standard Lookup Screen class if screen is opened.
    *
@@ -77,9 +83,9 @@ public interface UiTestAPI {
    * @param screenClass the type of the Screen
    * @param <S> the type of the Screen
    *
-   * @return an instance of the Test API
+   * @return an instance of the StandardScreenTestAPI
    */
-  <S extends Screen> ScreenTestAPI<S, ScreenTestAPI> getOpenedScreen(
+  <S extends Screen> StandardScreenTestAPI<S> getOpenedStandardScreen(
       Class<S> screenClass
   );
 
@@ -127,6 +133,18 @@ public interface UiTestAPI {
       Class<S> lookupScreenClass
   );
 
+
+  /**
+   * opens a Standard Screen
+   * @param screenClass the class of the Screen
+   * @param <S> type of the Screen
+   * @return an instance of this screen via StandardScreenTestAPI
+   */
+  <S extends Screen> StandardScreenTestAPI<S> openStandardScreen(
+      Class<S> screenClass
+  );
+
+
   /**
    * checks if a given screen is active
    * @param screenTestAPI the screen (via its ScreenTestAPI)
@@ -138,5 +156,4 @@ public interface UiTestAPI {
    * closes all screens in the UI
    */
   void closeAllScreens();
-
 }

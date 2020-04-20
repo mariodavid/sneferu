@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 20/04/2020
+
+### Added
+- `StandardScreenTestAPI` for interactions with Screens that are directly extending `com.haulmont.cuba.gui.screen.Screen`
+- `UiTestAPI.openStandardScreen()` for opening a Screen that extends `com.haulmont.cuba.gui.screen.Screen`
+- `UiTestAPI.getOpenedStandardScreen()` for retrieving a Screen that extends `com.haulmont.cuba.gui.screen.Screen`
+
+### Removed
+- BREAKING: `UiTestAPI.getOpenedScreen()` is removed. Use the new `UiTestAPI.getOpenedStandardScreen()` instead
+
 ## [0.2.2] - 30/03/2020
 
 ### Added

@@ -9,7 +9,7 @@ import de.diedavids.sneferu.components.ComponentDescriptor;
 import de.diedavids.sneferu.components.testapi.ComponentTestAPI;
 import java.util.function.Supplier;
 
-public class ScreenTestAPI<S extends Screen, THIS extends ScreenTestAPI> implements
+public abstract class ScreenTestAPI<S extends Screen, THIS extends ScreenTestAPI> implements
     InteractionExecutor<THIS> {
 
   protected S screen;

@@ -275,6 +275,12 @@ def "Screen Test API usage"() {
 
 More information on what Interactions are and how they can be used can be found in the corresponding [Interactions](#Interactions) section.
 
+The following classes exists for the `ScreenTestAPI`, that should be used based on the screen you interact with:
+
+* `StandardScreenTestAPI` for all Screens that directly extend `Screen`
+* `StandardLookupTestAPI` for all Screens that extend `StandardLookup`
+* `StandardEditorTestAPI` for all Screens that extend `StandardEditor`
+
 ### Screen Objects
 
 An extension of the ScreenTestAPI is the concept of a Screen Object.
