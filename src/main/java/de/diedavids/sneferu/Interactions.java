@@ -1,5 +1,6 @@
 package de.diedavids.sneferu;
 
+import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.screen.CloseAction;
 import com.haulmont.cuba.gui.screen.EditorScreen;
@@ -14,7 +15,9 @@ import de.diedavids.sneferu.interactions.EntityValueInteraction;
 import de.diedavids.sneferu.interactions.GetValueInteraction;
 import de.diedavids.sneferu.interactions.OpenTabInteraction;
 import de.diedavids.sneferu.interactions.ScreenOpenModeInteraction;
+import de.diedavids.sneferu.interactions.SelectInListInteraction;
 import de.diedavids.sneferu.interactions.SetValueInteraction;
+import java.util.Collection;
 
 /**
  * Factory methods for all interactions of the Interactions API of sneferu.
@@ -62,6 +65,43 @@ public class Interactions {
         return setValue(componentDescriptor, value);
     }
 
+
+
+    /**
+     * creates a select in list interaction, that selects a value on a given list component
+     *
+     * @param componentDescriptor the component descriptor describing the component to act upon
+     * @param value the value that should be selected
+     * @param <C> type of the Component
+     * @param <F> type of the Component Test API
+     * @param <E> type of the Entity to select
+     *
+     * @return a SelectInListInteraction instance
+     */
+    public static <C extends Component, F extends ComponentTestAPI<C>, E extends Entity> SelectInListInteraction selectInList(
+        ComponentDescriptor<C, F> componentDescriptor,
+        E value
+    ) {
+        return new SelectInListInteraction(componentDescriptor, value);
+    }
+
+    /**
+     * creates a select in list interaction, that selects a list of values on a given list component
+     *
+     * @param componentDescriptor the component descriptor describing the component to act upon
+     * @param values the values that should be selected
+     * @param <C> type of the Component
+     * @param <F> type of the Component Test API
+     * @param <E> type of the Entity to select
+     *
+     * @return a SelectInListInteraction instance
+     */
+    public static <C extends Component, F extends ComponentTestAPI<C>, E extends Entity> SelectInListInteraction selectInList(
+        ComponentDescriptor<C, F> componentDescriptor,
+        Collection<E> values
+    ) {
+        return new SelectInListInteraction(componentDescriptor, values);
+    }
 
 
     /**
