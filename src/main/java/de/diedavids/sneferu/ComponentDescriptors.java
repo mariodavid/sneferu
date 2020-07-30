@@ -213,4 +213,14 @@ public class ComponentDescriptors {
         return new SideMenuComponentDescriptor(id);
     }
 
+
+    /**
+     * creates a {@link CurrencyFieldComponentDescriptor} instance
+     * @param id the id of the component as defined in the screen XML descriptor
+     * @return a CurrencyFieldComponentDescriptor instance
+     */
+    public static CurrencyFieldComponentDescriptor currencyField(String id) {
+        return new CurrencyFieldComponentDescriptor(id);
+    }
+
 }
