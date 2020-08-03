@@ -55,7 +55,7 @@ public class CubaWebUiTestAPI implements UiTestAPI {
     ) {
         Screen screen = getLastOpenedScreen();
 
-        if (screen instanceof StandardEditor) {
+        if (screenTypesMatch(screen, screenEditorClass)) {
             S castedScreen = (S) screen;
             return new StandardEditorTestAPI(screenEditorClass, castedScreen);
         }
@@ -74,10 +74,10 @@ public class CubaWebUiTestAPI implements UiTestAPI {
 
         return optionalScreen.orElseGet(() -> new StandardEditorTestAPI<E, S>(
             screenEditorClass, () -> {
-            final Optional<StandardEditorTestAPI<E, S>> optionalScreen2 = tryToOpenStandardEditor(
+            final Optional<StandardEditorTestAPI<E, S>> lazyOptionalScreen = tryToOpenStandardEditor(
                 screenEditorClass);
 
-            return optionalScreen2
+            return lazyOptionalScreen
                 .map(ScreenTestAPI::screen)
                 .orElseThrow(ScreenNotOpenException::new);
         }));
@@ -93,11 +93,11 @@ public class CubaWebUiTestAPI implements UiTestAPI {
 
         return optionalScreen.orElseGet(() -> new StandardLookupTestAPI<E, S>(
             screenLookupClass, () -> {
-            final Optional<StandardLookupTestAPI<E, S>> optionalScreen2 = tryToOpenStandardLookup(
+            final Optional<StandardLookupTestAPI<E, S>> lazyOptionalScreen = tryToOpenStandardLookup(
                 screenLookupClass
             );
 
-            return optionalScreen2
+            return lazyOptionalScreen
                 .map(ScreenTestAPI::screen)
                 .orElseThrow(ScreenNotOpenException::new);
         }));
@@ -111,11 +111,11 @@ public class CubaWebUiTestAPI implements UiTestAPI {
 
         return optionalScreen.orElseGet(() -> new StandardScreenTestAPI<S>(
             screenClass, () -> {
-            final Optional<StandardScreenTestAPI<S>> optionalScreen2 = tryToOpenStandardScreen(
+            final Optional<StandardScreenTestAPI<S>> lazyOptionalScreen = tryToOpenStandardScreen(
                 screenClass
             );
 
-            return optionalScreen2
+            return lazyOptionalScreen
                 .map(ScreenTestAPI::screen)
                 .orElseThrow(ScreenNotOpenException::new);
         }));
@@ -126,7 +126,7 @@ public class CubaWebUiTestAPI implements UiTestAPI {
     ) {
         Screen screen = getLastOpenedScreen();
 
-        if (screen instanceof StandardEditor) {
+        if (screenTypesMatch(screen, screenEditorClass)) {
             S castedScreen = (S) screen;
             return Optional.of(new StandardEditorTestAPI(screenEditorClass, castedScreen));
         }
@@ -141,7 +141,7 @@ public class CubaWebUiTestAPI implements UiTestAPI {
     ) {
         Screen screen = getLastOpenedScreen();
 
-        if (screen instanceof StandardLookup) {
+        if (screenTypesMatch(screen, screenLookupClass)) {
             S castedScreen = (S) screen;
             return Optional.of(new StandardLookupTestAPI(screenLookupClass, castedScreen));
         }
@@ -156,7 +156,7 @@ public class CubaWebUiTestAPI implements UiTestAPI {
     ) {
         Screen screen = getLastOpenedScreen();
 
-        if (screen instanceof Screen) {
+        if (screenTypesMatch(screen, screenClass)) {
             S castedScreen = (S) screen;
             return Optional.of(new StandardScreenTestAPI(screenClass, castedScreen));
         }
@@ -172,7 +172,7 @@ public class CubaWebUiTestAPI implements UiTestAPI {
 
         Screen screen = getLastOpenedScreen();
 
-        if (screen instanceof StandardLookup) {
+        if (screenTypesMatch(screen, screenLookupClass)) {
             S castedScreen = (S) screen;
             return new StandardLookupTestAPI<E,S>(screenLookupClass, castedScreen);
         }
@@ -187,7 +187,7 @@ public class CubaWebUiTestAPI implements UiTestAPI {
     ) {
         Screen screen = getLastOpenedScreen();
 
-        if (screen != null) {
+        if (screenTypesMatch(screen, screenClass)) {
             S castedScreen = (S) screen;
             return new StandardScreenTestAPI<>(screenClass, castedScreen);
         }
@@ -268,6 +268,11 @@ public class CubaWebUiTestAPI implements UiTestAPI {
         else {
             return null;
         }
+    }
+
+
+    <S extends Screen> boolean screenTypesMatch(Screen screen, Class<S> screenClass) {
+        return screen != null && screenClass.isAssignableFrom(screen.getClass());
     }
 
     @Override

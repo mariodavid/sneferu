@@ -1,4 +1,4 @@
-package de.diedavids.sneferu.example;
+package de.diedavids.sneferu.example.customer;
 
 import com.haulmont.cuba.core.entity.StandardEntity;
 

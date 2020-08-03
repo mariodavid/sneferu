@@ -225,7 +225,7 @@ public class SneferuTestUiEnvironment extends TestUiEnvironment implements
                 return cannotHandle();
             }
 
-            return getUiTestAPI().getLazyOpenedEditorScreen((Class) actualTypeArguments[0]);
+            return getUiTestAPI().getLazyOpenedEditorScreen((Class) actualTypeArguments[1]);
         }
 
         else {

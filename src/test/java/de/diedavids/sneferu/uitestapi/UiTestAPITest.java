@@ -17,10 +17,13 @@ import com.haulmont.cuba.web.testsupport.TestUiEnvironment;
 import de.diedavids.sneferu.CubaWebUiTestAPI;
 import de.diedavids.sneferu.ScreenNotOpenException;
 import de.diedavids.sneferu.UiTestAPI;
+import de.diedavids.sneferu.example.AnotherCustomStandardScreen;
 import de.diedavids.sneferu.example.CustomStandardScreen;
-import de.diedavids.sneferu.example.Customer;
-import de.diedavids.sneferu.example.CustomerStandardEditor;
-import de.diedavids.sneferu.example.CustomerStandardLookup;
+import de.diedavids.sneferu.example.customer.Customer;
+import de.diedavids.sneferu.example.customer.CustomerStandardEditor;
+import de.diedavids.sneferu.example.customer.CustomerStandardLookup;
+import de.diedavids.sneferu.example.order.OrderStandardEditor;
+import de.diedavids.sneferu.example.order.OrderStandardLookup;
 import de.diedavids.sneferu.screen.StandardEditorTestAPI;
 import de.diedavids.sneferu.screen.StandardLookupTestAPI;
 import java.util.Collection;
@@ -102,6 +105,24 @@ class UiTestAPITest {
     }
 
     @Test
+    void given_anotherEditorIsOpened_when_getOpenedEditorScreen_then_ScreenNotOpenExceptionIsThrown() {
+
+      // given:
+      final CustomerStandardEditor customerEditor = new CustomerStandardEditor();
+
+      allScreens()
+          .thenReturn(
+              openScreens(customerEditor)
+          );
+
+      // expect:
+      assertThrows(
+          ScreenNotOpenException.class,
+          () -> sut.getOpenedEditorScreen(OrderStandardEditor.class)
+      );
+    }
+
+    @Test
     void given_screenIsNotOpen_when_aLazyOpenedStandardEditor_anInstanceIsReturnedThatTriesToFetchTheScreenOnTheFly_whenRequestingComponent() {
 
       // given:
@@ -151,6 +172,26 @@ class UiTestAPITest {
 
   @Nested
   class StandardScreen {
+
+
+    @Test
+    void given_anotherStandardScreenIsOpened_when_getOpenedStandardScreen_thenScreenNotOpenExceptionIsThrown() {
+
+      // given:
+      final CustomStandardScreen customStandardScreen = new CustomStandardScreen();
+
+      allScreens()
+          .thenReturn(
+              openScreens(customStandardScreen)
+          );
+
+      // expect:
+      assertThrows(
+          ScreenNotOpenException.class,
+          () -> sut.getOpenedStandardScreen(AnotherCustomStandardScreen.class)
+      );
+
+    }
 
     @Test
     void when_screenIsNotOpen_then_anInstanceIsReturnedThatTriesToFetchTheScreenOnTheFly_whenRequestingScreen() {
@@ -226,6 +267,25 @@ class UiTestAPITest {
 
   @Nested
   class OpenStandardLookup {
+
+    @Test
+    void given_anotherStandardLookupIsOpened_when_getOpenedLookupScreen_thenScreenNotOpenExceptionIsThrown() {
+
+      // given:
+      final CustomerStandardLookup foundCustomerLookup = mock(CustomerStandardLookup.class);
+
+      allScreens()
+          .thenReturn(
+              openScreens(foundCustomerLookup)
+          );
+
+      // expect:
+      assertThrows(
+          ScreenNotOpenException.class,
+          () -> sut.getOpenedLookupScreen(OrderStandardLookup.class)
+      );
+
+    }
 
     @Test
     void given_screenIsNotOpen_when_aLazyOpenedStandardLookup_anInstanceIsReturnedThatTriesToFetchTheScreenOnTheFly_whenRequestingComponent() {

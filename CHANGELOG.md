@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.3.3] - 03/08/2020
+
+### Bugfix
+- `@SubsequentScreen` uses correct API to retrieve lazy loaded screen instance
+- `UiTestAPI.getOpened[Standard|Lookup|Editor]Screen` checks for the exact type of currently active opened screen. Previously weaker checks led to the situation that when a Customer Editor is open, but it is asked for Order Editor - it would still have returned the Customer Editor, because the check was only if the screen is of type `StandardEditor`
+
 ## [0.3.2] - 30/07/2020
 
 ### Added
