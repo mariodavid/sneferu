@@ -6,9 +6,10 @@ import de.diedavids.sneferu.InteractionWithOutcome;
 import de.diedavids.sneferu.components.ComponentDescriptor;
 import de.diedavids.sneferu.components.testapi.ComponentTestAPI;
 
+import de.diedavids.sneferu.screen.ScreenTestAPI;
 import de.diedavids.sneferu.screen.StandardEditorTestAPI;
 
-public class GetValueInteraction<T> implements InteractionWithOutcome<T, StandardEditorTestAPI> {
+public class GetValueInteraction<T> implements InteractionWithOutcome<T, ScreenTestAPI> {
 
   private final ComponentDescriptor<? extends Component, ? extends ComponentTestAPI> componentDescriptor;
 
@@ -19,7 +20,7 @@ public class GetValueInteraction<T> implements InteractionWithOutcome<T, Standar
   }
 
   @Override
-  public T execute(StandardEditorTestAPI screenTestAPI) {
+  public T execute(ScreenTestAPI screenTestAPI) {
     HasValue hasValue = (HasValue) screenTestAPI.component(componentDescriptor).rawComponent();
     return (T) hasValue.getValue();
   }
