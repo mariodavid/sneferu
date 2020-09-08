@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/mariodavid/sneferu.svg?branch=master)](https://travis-ci.com/mariodavid/cuba-component-metadata-extensions)
+[![Build Status](https://travis-ci.com/mariodavid/sneferu.svg?branch=master)](https://travis-ci.com/mariodavid/sneferu)
 [ ![Download](https://api.bintray.com/packages/mariodavid/cuba-components/sneferu/images/download.svg) ](https://bintray.com/mariodavid/cuba-components/sneferu/_latestVersion)
 [![license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
 
