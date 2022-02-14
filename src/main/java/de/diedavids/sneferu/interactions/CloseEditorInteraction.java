@@ -1,9 +1,9 @@
 package de.diedavids.sneferu.interactions;
 
-import com.haulmont.cuba.gui.screen.StandardEditor;
-import com.haulmont.cuba.gui.util.OperationResult;
-import de.diedavids.sneferu.screen.StandardEditorTestAPI;
 import de.diedavids.sneferu.InteractionWithOutcome;
+import de.diedavids.sneferu.screen.StandardEditorTestAPI;
+import io.jmix.ui.screen.StandardEditor;
+import io.jmix.ui.util.OperationResult;
 
 public class CloseEditorInteraction implements InteractionWithOutcome<OperationResult, StandardEditorTestAPI> {
 

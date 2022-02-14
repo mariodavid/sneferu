@@ -1,7 +1,6 @@
 package de.diedavids.sneferu.components.testapi;
 
-import com.haulmont.cuba.gui.components.CurrencyField;
-import de.diedavids.sneferu.components.testapi.GenericComponentTestAPI;
+import io.jmix.ui.component.CurrencyField;
 
 public class CurrencyFieldTestAPI extends GenericComponentTestAPI<CurrencyField> {
 

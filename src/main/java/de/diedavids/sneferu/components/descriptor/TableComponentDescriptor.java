@@ -1,8 +1,8 @@
 package de.diedavids.sneferu.components.descriptor;
 
 
-import com.haulmont.cuba.gui.components.Table;
 import de.diedavids.sneferu.components.testapi.GenericComponentTestAPI;
+import io.jmix.ui.component.Table;
 
 public class TableComponentDescriptor
         extends GenericComponentDescriptor<Table, GenericComponentTestAPI<Table>> {

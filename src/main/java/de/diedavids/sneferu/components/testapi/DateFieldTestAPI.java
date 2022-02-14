@@ -1,6 +1,6 @@
 package de.diedavids.sneferu.components.testapi;
 
-import com.haulmont.cuba.gui.components.DateField;
+import io.jmix.ui.component.DateField;
 
 public class DateFieldTestAPI extends GenericComponentTestAPI<DateField> {
 

@@ -1,8 +1,9 @@
 package de.diedavids.sneferu.interactions;
 
-import com.haulmont.cuba.gui.screen.StandardEditor;
-import de.diedavids.sneferu.screen.StandardEditorTestAPI;
 import de.diedavids.sneferu.InteractionWithOutcome;
+import de.diedavids.sneferu.screen.StandardEditorTestAPI;
+import io.jmix.core.entity.EntityValues;
+import io.jmix.ui.screen.StandardEditor;
 
 public class EntityValueInteraction<T> implements InteractionWithOutcome<T, StandardEditorTestAPI> {
 
@@ -14,7 +15,8 @@ public class EntityValueInteraction<T> implements InteractionWithOutcome<T, Stan
 
     @Override
     public T execute(StandardEditorTestAPI screenTestAPI) {
-        return ((StandardEditor) screenTestAPI.screen()).getEditedEntity().<T>getValue(attribute);
+        return EntityValues.getValue(((StandardEditor) screenTestAPI.screen()).getEditedEntity(), attribute);
+//        return ((StandardEditor) screenTestAPI.screen()).getEditedEntity().<T>getValue(attribute);
     }
 
 }

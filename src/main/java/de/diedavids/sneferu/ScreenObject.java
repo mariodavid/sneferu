@@ -6,8 +6,8 @@ import de.diedavids.sneferu.screen.ScreenTestAPI;
 /**
  * A Screen Object represents an abstraction upon the screen Test API {@link ScreenTestAPI}
  *
- * A Class implementing a Screen Object represents the an API abstraction for a given
- * Screen. It allows to define use-case specific methods to interact with the
+ * A Class implementing a Screen Object represents an API abstraction for a given
+ * Screen. It allows you to define use-case specific methods to interact with the
  * Screen via its Testing API abstraction.
  *
  * The concept of the Screen Object is an implementation of the Page Object Pattern

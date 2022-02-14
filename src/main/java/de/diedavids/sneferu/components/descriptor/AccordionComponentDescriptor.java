@@ -1,8 +1,8 @@
 package de.diedavids.sneferu.components.descriptor;
 
 
-import com.haulmont.cuba.gui.components.Accordion;
 import de.diedavids.sneferu.components.testapi.GenericComponentTestAPI;
+import io.jmix.ui.component.Accordion;
 
 public class AccordionComponentDescriptor
         extends GenericComponentDescriptor<Accordion, GenericComponentTestAPI<Accordion>> {

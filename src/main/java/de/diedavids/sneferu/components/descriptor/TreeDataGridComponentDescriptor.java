@@ -1,8 +1,8 @@
 package de.diedavids.sneferu.components.descriptor;
 
 
-import com.haulmont.cuba.gui.components.TreeDataGrid;
 import de.diedavids.sneferu.components.testapi.GenericComponentTestAPI;
+import io.jmix.ui.component.TreeDataGrid;
 
 public class TreeDataGridComponentDescriptor
             extends GenericComponentDescriptor<TreeDataGrid, GenericComponentTestAPI<TreeDataGrid>> {

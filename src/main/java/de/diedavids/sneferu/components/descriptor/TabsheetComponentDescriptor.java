@@ -1,8 +1,8 @@
 package de.diedavids.sneferu.components.descriptor;
 
 
-import com.haulmont.cuba.gui.components.TabSheet;
 import de.diedavids.sneferu.components.testapi.GenericComponentTestAPI;
+import io.jmix.ui.component.TabSheet;
 
 public class TabsheetComponentDescriptor
         extends GenericComponentDescriptor<TabSheet, GenericComponentTestAPI<TabSheet>> {

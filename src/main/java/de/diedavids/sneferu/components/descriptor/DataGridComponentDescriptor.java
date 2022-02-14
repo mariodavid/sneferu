@@ -1,8 +1,8 @@
 package de.diedavids.sneferu.components.descriptor;
 
 
-import com.haulmont.cuba.gui.components.DataGrid;
 import de.diedavids.sneferu.components.testapi.GenericComponentTestAPI;
+import io.jmix.ui.component.DataGrid;
 
 public class DataGridComponentDescriptor
             extends GenericComponentDescriptor<DataGrid, GenericComponentTestAPI<DataGrid>> {

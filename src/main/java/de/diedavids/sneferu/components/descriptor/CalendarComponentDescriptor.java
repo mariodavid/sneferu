@@ -1,8 +1,8 @@
 package de.diedavids.sneferu.components.descriptor;
 
 
-import com.haulmont.cuba.gui.components.Calendar;
 import de.diedavids.sneferu.components.testapi.GenericComponentTestAPI;
+import io.jmix.ui.component.Calendar;
 
 public class CalendarComponentDescriptor
             extends GenericComponentDescriptor<Calendar, GenericComponentTestAPI<Calendar>> {

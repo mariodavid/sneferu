@@ -1,9 +1,5 @@
 package de.diedavids.sneferu;
 
-import com.haulmont.cuba.core.entity.Entity;
-import com.haulmont.cuba.gui.components.Component;
-import com.haulmont.cuba.gui.screen.CloseAction;
-import com.haulmont.cuba.gui.screen.EditorScreen;
 import de.diedavids.sneferu.components.ComponentDescriptor;
 import de.diedavids.sneferu.components.descriptor.TabsheetComponentDescriptor;
 import de.diedavids.sneferu.components.testapi.ComponentTestAPI;
@@ -17,6 +13,10 @@ import de.diedavids.sneferu.interactions.OpenTabInteraction;
 import de.diedavids.sneferu.interactions.ScreenOpenModeInteraction;
 import de.diedavids.sneferu.interactions.SelectInListInteraction;
 import de.diedavids.sneferu.interactions.SetValueInteraction;
+import io.jmix.ui.component.Component;
+import io.jmix.ui.screen.CloseAction;
+import io.jmix.ui.screen.FrameOwner;
+
 import java.util.Collection;
 
 /**
@@ -78,7 +78,7 @@ public class Interactions {
      *
      * @return a SelectInListInteraction instance
      */
-    public static <C extends Component, F extends ComponentTestAPI<C>, E extends Entity> SelectInListInteraction selectInList(
+    public static <C extends Component, F extends ComponentTestAPI<C>, E> SelectInListInteraction selectInList(
         ComponentDescriptor<C, F> componentDescriptor,
         E value
     ) {
@@ -96,7 +96,7 @@ public class Interactions {
      *
      * @return a SelectInListInteraction instance
      */
-    public static <C extends Component, F extends ComponentTestAPI<C>, E extends Entity> SelectInListInteraction selectInList(
+    public static <C extends Component, F extends ComponentTestAPI<C>, E> SelectInListInteraction selectInList(
         ComponentDescriptor<C, F> componentDescriptor,
         Collection<E> values
     ) {
@@ -183,7 +183,7 @@ public class Interactions {
     }
 
     /**
-     * creates a Close Editor interaction, that closes an editor with the Close and Commit Close Action {@link EditorScreen#WINDOW_COMMIT_AND_CLOSE}
+     * creates a Close Editor interaction, that closes an editor with the Close and Commit Close Action {@link FrameOwner#WINDOW_COMMIT_AND_CLOSE_ACTION}
      *
      * @return a CloseEditorInteraction instance
      */
@@ -214,7 +214,7 @@ public class Interactions {
 
 
     /**
-     * creates a Cancel Editor interaction, that closes an editor with the Close Action {@link EditorScreen#WINDOW_CLOSE}
+     * creates a Cancel Editor interaction, that closes an editor with the Close Action {@link FrameOwner#WINDOW_CLOSE_ACTION}
      *
      * @return a CancelEditorInteraction instance
      */

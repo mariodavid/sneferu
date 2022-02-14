@@ -1,8 +1,8 @@
 package de.diedavids.sneferu.components.descriptor;
 
 
-import com.haulmont.cuba.gui.components.Button;
 import de.diedavids.sneferu.components.testapi.ButtonTestAPI;
+import io.jmix.ui.component.Button;
 
 public class ButtonComponentDescriptor
         extends GenericComponentDescriptor<Button, ButtonTestAPI> {

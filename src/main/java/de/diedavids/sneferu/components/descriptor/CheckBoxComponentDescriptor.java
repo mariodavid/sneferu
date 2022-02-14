@@ -1,8 +1,8 @@
 package de.diedavids.sneferu.components.descriptor;
 
 
-import com.haulmont.cuba.gui.components.CheckBox;
 import de.diedavids.sneferu.components.testapi.GenericComponentTestAPI;
+import io.jmix.ui.component.CheckBox;
 
 public class CheckBoxComponentDescriptor
         extends GenericComponentDescriptor<CheckBox, GenericComponentTestAPI<CheckBox>> {

@@ -1,8 +1,8 @@
 package de.diedavids.sneferu.components.descriptor;
 
 
-import com.haulmont.cuba.gui.components.ColorPicker;
 import de.diedavids.sneferu.components.testapi.GenericComponentTestAPI;
+import io.jmix.ui.component.ColorPicker;
 
 public class ColorPickerComponentDescriptor
         extends GenericComponentDescriptor<ColorPicker, GenericComponentTestAPI<ColorPicker>> {

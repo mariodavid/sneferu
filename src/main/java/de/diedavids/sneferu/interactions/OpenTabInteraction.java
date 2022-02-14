@@ -1,9 +1,9 @@
 package de.diedavids.sneferu.interactions;
 
-import com.haulmont.cuba.gui.components.TabSheet;
+import de.diedavids.sneferu.Interaction;
 import de.diedavids.sneferu.components.descriptor.TabsheetComponentDescriptor;
 import de.diedavids.sneferu.screen.ScreenTestAPI;
-import de.diedavids.sneferu.Interaction;
+import io.jmix.ui.component.TabSheet;
 
 public class OpenTabInteraction implements Interaction<ScreenTestAPI> {
 

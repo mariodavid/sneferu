@@ -1,11 +1,11 @@
 package de.diedavids.sneferu.interactions;
 
-import com.haulmont.cuba.gui.components.Button;
-import com.haulmont.cuba.gui.components.Component;
-import de.diedavids.sneferu.screen.ScreenTestAPI;
 import de.diedavids.sneferu.Interaction;
 import de.diedavids.sneferu.components.ComponentDescriptor;
 import de.diedavids.sneferu.components.testapi.ComponentTestAPI;
+import de.diedavids.sneferu.screen.ScreenTestAPI;
+import io.jmix.ui.component.Button;
+import io.jmix.ui.component.Component;
 
 public class ClickInteraction implements Interaction {
 

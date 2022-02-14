@@ -172,7 +172,7 @@ class FirstSneferuSpec extends Specification {
 }
 ```
 
-Instead of using `com.haulmont.cuba.web.testsupport.TestUiEnvironment` a Sneferu-specific environment is used: `de.diedavids.sneferu.environment.SneferuTestUiEnvironment`
+Instead of using `com.haulmont.cuba.web.testsupport.TestUiEnvironment` a Sneferu-specific environment is used: `de.diedavids.sneferu.environment.SneferuUiTestExtension`
 
 This environment-class has an additional parameter, that needs to be provided: `withMainScreen()`, where the Main Screen of the application is configured.
 

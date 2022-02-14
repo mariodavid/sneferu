@@ -1,7 +1,7 @@
 package de.diedavids.sneferu.components.descriptor;
 
-import com.haulmont.cuba.gui.components.CurrencyField;
 import de.diedavids.sneferu.components.testapi.CurrencyFieldTestAPI;
+import io.jmix.ui.component.CurrencyField;
 
 public class CurrencyFieldComponentDescriptor
         extends GenericComponentDescriptor<CurrencyField, CurrencyFieldTestAPI> {

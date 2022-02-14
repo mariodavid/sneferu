@@ -1,115 +1,39 @@
 plugins {
     id 'java'
-    id 'groovy'
-    id 'net.researchgate.release' version '2.8.1'
-    id  'com.jfrog.bintray' version "1.8.4"
 }
 
-apply plugin: "maven"
 
 group 'de.diedavids.sneferu'
 version project.properties['version']
 
 sourceCompatibility = 1.8
 
-
-bintray {
-    user = System.getenv('BINTRAY_USERNAME')
-    key = System.getenv('BINTRAY_PASSWORD')
-
-    configurations = ['archives']
-
-    publish = true
-
-    override = false
-
-    // metadata
-    pkg {
-        repo = 'cuba-components'
-        name = 'sneferu'
-        desc = 'Web Integration Testing Library'
-        userOrg = 'mariodavid'
-
-        websiteUrl = 'https://github.com/mariodavid/sneferu'
-        issueTrackerUrl = 'https://github.com/mariodavid/sneferu/issues'
-        vcsUrl = 'https://github.com/mariodavid/sneferu.git'
-
-        licenses = ["Apache-2.0"]
-
-        labels = ['sneferu', 'cuba-platform', 'cuba-component', 'integration-testing']
-        githubRepo = 'mariodavid/sneferu'
-        githubReleaseNotesFile = 'CHANGELOG.md'
-
-        version {
-            name = "${rootProject.version}"
-            desc = ''
-            released = new Date()
-            vcsTag = "${rootProject.version}"
-        }
-    }
-}
-
-
-
 repositories {
     mavenCentral()
     maven {
-        url 'https://dl.bintray.com/cuba-platform/main'
-
+//        url 'https://global.repo.jmix.io/repository/public'
+        url 'https://nexus.jmix.io/repository/public'
     }
-    jcenter()
-}
-
-ext {
-    vaadinVersion = "8.9.2-3-cuba"
 }
 
 dependencies {
 
-    compile 'com.haulmont.cuba:cuba-gui:7.2.0'
-    compile 'com.haulmont.cuba:cuba-web-tests:7.2.0'
-
-    /* Vaadin */
-    compile("com.vaadin:vaadin-server:${vaadinVersion}") {
-        exclude(group: 'com.vaadin', module: 'vaadin-sass-compiler')
-    }
-    compile("com.vaadin:vaadin-compatibility-server:${vaadinVersion}") {
-        exclude(group: 'com.vaadin', module: 'vaadin-sass-compiler')
-    }
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
 
-    testCompile 'org.slf4j:slf4j-simple:1.7.25'
+    implementation 'io.jmix.ui:jmix-ui:1.2.0-SNAPSHOT'
+    implementation 'io.jmix.ui:jmix-ui-test-assist:1.2.0-SNAPSHOT'
 
 
-
-    testCompile('org.junit.jupiter:junit-jupiter-api:5.5.2')
-    testCompile('org.junit.jupiter:junit-jupiter-engine:5.5.2')
-
-
-    testCompile 'org.mockito:mockito-core:3.2.4'
-    testCompile 'org.mockito:mockito-junit-jupiter:3.2.4'
+    testImplementation 'org.mockito:mockito-core:4.3.1'
+    testImplementation 'org.mockito:mockito-junit-jupiter:4.3.1'
 
 
-    testCompile 'org.assertj:assertj-core:3.11.1'
+    testImplementation 'org.assertj:assertj-core:3.22.0'
 }
 
 
 test {
     useJUnitPlatform()
-}
-
-
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives sourcesJar
-    archives javadocJar
 }

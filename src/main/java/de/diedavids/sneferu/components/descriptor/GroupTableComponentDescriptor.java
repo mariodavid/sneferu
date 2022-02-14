@@ -1,8 +1,8 @@
 package de.diedavids.sneferu.components.descriptor;
 
 
-import com.haulmont.cuba.gui.components.GroupTable;
 import de.diedavids.sneferu.components.testapi.GenericComponentTestAPI;
+import io.jmix.ui.component.GroupTable;
 
 public class GroupTableComponentDescriptor
         extends GenericComponentDescriptor<GroupTable, GenericComponentTestAPI<GroupTable>> {

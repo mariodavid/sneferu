@@ -1,9 +1,10 @@
 package de.diedavids.sneferu.interactions;
 
-import com.haulmont.cuba.gui.screen.CloseAction;
-import com.haulmont.cuba.gui.util.OperationResult;
 import de.diedavids.sneferu.InteractionWithOutcome;
 import de.diedavids.sneferu.screen.InputDialogTestAPI;
+import io.jmix.ui.screen.CloseAction;
+import io.jmix.ui.util.OperationResult;
+
 import java.util.Optional;
 
 public class CloseInputDialogInteraction  implements InteractionWithOutcome<OperationResult, InputDialogTestAPI> {
