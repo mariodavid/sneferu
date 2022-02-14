@@ -1,6 +1,5 @@
 package de.diedavids.sneferu;
 
-
 import de.diedavids.sneferu.screen.ScreenTestAPI;
 
 /**

@@ -1,8 +1,8 @@
 package de.diedavids.sneferu.components.descriptor;
 
 
-import com.haulmont.cuba.gui.components.Tree;
 import de.diedavids.sneferu.components.testapi.GenericComponentTestAPI;
+import io.jmix.ui.component.Tree;
 
 public class TreeComponentDescriptor
         extends GenericComponentDescriptor<Tree, GenericComponentTestAPI<Tree>> {

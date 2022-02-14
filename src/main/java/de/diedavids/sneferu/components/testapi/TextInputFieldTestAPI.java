@@ -1,6 +1,6 @@
 package de.diedavids.sneferu.components.testapi;
 
-import com.haulmont.cuba.gui.components.TextInputField;
+import io.jmix.ui.component.TextInputField;
 
 public class TextInputFieldTestAPI extends GenericComponentTestAPI<TextInputField> {
 

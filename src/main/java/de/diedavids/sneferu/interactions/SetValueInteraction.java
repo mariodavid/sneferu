@@ -1,11 +1,11 @@
 package de.diedavids.sneferu.interactions;
 
-import com.haulmont.cuba.gui.components.Component;
-import com.haulmont.cuba.gui.components.HasValue;
 import de.diedavids.sneferu.Interaction;
 import de.diedavids.sneferu.components.ComponentDescriptor;
 import de.diedavids.sneferu.components.testapi.ComponentTestAPI;
 import de.diedavids.sneferu.screen.ScreenTestAPI;
+import io.jmix.ui.component.Component;
+import io.jmix.ui.component.HasValue;
 
 public class SetValueInteraction implements Interaction {
 

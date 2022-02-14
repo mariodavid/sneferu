@@ -1,7 +1,7 @@
 package de.diedavids.sneferu.components.descriptor;
 
-import com.haulmont.cuba.gui.components.TextInputField;
 import de.diedavids.sneferu.components.testapi.TextFieldTestAPI;
+import io.jmix.ui.component.TextInputField;
 
 public class TextFieldComponentDescriptor
         extends GenericComponentDescriptor<TextInputField, TextFieldTestAPI> {

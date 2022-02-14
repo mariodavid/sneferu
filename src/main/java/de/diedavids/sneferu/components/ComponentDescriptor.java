@@ -1,7 +1,7 @@
 package de.diedavids.sneferu.components;
 
-import com.haulmont.cuba.gui.components.Component;
 import de.diedavids.sneferu.components.testapi.ComponentTestAPI;
+import io.jmix.ui.component.Component;
 
 public interface ComponentDescriptor<C extends Component, F extends ComponentTestAPI<C>> {
 

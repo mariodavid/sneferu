@@ -11,8 +11,6 @@ import de.diedavids.sneferu.components.descriptor.DataGridComponentDescriptor;
 import de.diedavids.sneferu.components.descriptor.DateFieldComponentDescriptor;
 import de.diedavids.sneferu.components.descriptor.GroupTableComponentDescriptor;
 import de.diedavids.sneferu.components.descriptor.ImageComponentDescriptor;
-import de.diedavids.sneferu.components.descriptor.LookupFieldComponentDescriptor;
-import de.diedavids.sneferu.components.descriptor.PickerFieldComponentDescriptor;
 import de.diedavids.sneferu.components.descriptor.SuggestionFieldComponentDescriptor;
 import de.diedavids.sneferu.components.descriptor.TableComponentDescriptor;
 import de.diedavids.sneferu.components.descriptor.TabsheetComponentDescriptor;
@@ -97,21 +95,38 @@ public class ComponentDescriptors {
 
 
     /**
-     * creates a {@link LookupFieldComponentDescriptor} instance
+     * creates a {@link ComboBoxComponentDescriptor} instance
      * @param id the id of the component as defined in the screen XML descriptor
-     * @return a LookupFieldComponentDescriptor instance
+     * @return a ComboBoxComponentDescriptor instance
      */
-    public static LookupFieldComponentDescriptor lookupField(String id) {
-        return new LookupFieldComponentDescriptor(id);
+    public static ComboBoxComponentDescriptor comboBox(String id) {
+        return new ComboBoxComponentDescriptor(id);
     }
 
     /**
-     * creates a {@link PickerFieldComponentDescriptor} instance
+     * creates a {@link EntityComboBoxComponentDescriptor} instance
      * @param id the id of the component as defined in the screen XML descriptor
      * @return a PickerFieldComponentDescriptor instance
      */
-    public static PickerFieldComponentDescriptor pickerField(String id) {
-        return new PickerFieldComponentDescriptor(id);
+    public static EntityComboBoxComponentDescriptor entityComboBox(String id) {
+        return new EntityComboBoxComponentDescriptor(id);
+    }
+
+    /**
+     * creates a {@link TagFieldComponentDescriptor} instance
+     * @param id the id of the component as defined in the screen XML descriptor
+     * @return a TagFieldComponentDescriptor instance
+     */
+    public static TagFieldComponentDescriptor tagField(String id) {
+        return new TagFieldComponentDescriptor(id);
+    }
+    /**
+     * creates a {@link TagPickerComponentDescriptor} instance
+     * @param id the id of the component as defined in the screen XML descriptor
+     * @return a TagPickerComponentDescriptor instance
+     */
+    public static TagPickerComponentDescriptor tagPicker(String id) {
+        return new TagPickerComponentDescriptor(id);
     }
 
 

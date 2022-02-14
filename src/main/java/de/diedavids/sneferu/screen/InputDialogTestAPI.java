@@ -1,7 +1,7 @@
 package de.diedavids.sneferu.screen;
 
 
-import com.haulmont.cuba.gui.app.core.inputdialog.InputDialog;
+import io.jmix.ui.app.inputdialog.InputDialog;
 
 public class InputDialogTestAPI extends ScreenTestAPI<InputDialog, InputDialogTestAPI> {
 

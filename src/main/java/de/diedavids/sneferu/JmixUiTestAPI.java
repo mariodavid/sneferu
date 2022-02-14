@@ -1,56 +1,37 @@
 package de.diedavids.sneferu;
 
-import com.haulmont.cuba.core.entity.Entity;
-import com.haulmont.cuba.gui.ScreenBuilders;
-import com.haulmont.cuba.gui.Screens;
-import com.haulmont.cuba.gui.app.core.inputdialog.InputDialog;
-import com.haulmont.cuba.gui.screen.*;
-
-import com.haulmont.cuba.web.app.main.MainScreen;
-import com.haulmont.cuba.web.testsupport.TestUiEnvironment;
 import de.diedavids.sneferu.screen.InputDialogTestAPI;
 import de.diedavids.sneferu.screen.ScreenTestAPI;
 import de.diedavids.sneferu.screen.StandardEditorTestAPI;
 import de.diedavids.sneferu.screen.StandardLookupTestAPI;
 import de.diedavids.sneferu.screen.StandardScreenTestAPI;
+import io.jmix.ui.ScreenBuilders;
+import io.jmix.ui.Screens;
+import io.jmix.ui.app.inputdialog.InputDialog;
+import io.jmix.ui.screen.Screen;
+import io.jmix.ui.screen.StandardEditor;
+import io.jmix.ui.screen.StandardLookup;
+
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class CubaWebUiTestAPI implements UiTestAPI {
+public class JmixUiTestAPI implements UiTestAPI {
 
-    private final TestUiEnvironment environment;
     private final ScreenBuilders screenBuilders;
-    private final Class<? extends MainScreen> mainScreenClass;
+    private final Screens screens;
 
-    public CubaWebUiTestAPI(
-            TestUiEnvironment environment,
+    public JmixUiTestAPI(
             ScreenBuilders screenBuilders,
-            Class<? extends MainScreen> mainScreenClass
+            Screens screens
     ) {
-        this.environment = environment;
         this.screenBuilders = screenBuilders;
-        this.mainScreenClass = mainScreenClass;
-    }
-
-    private Screen rootScreen() {
-
-        Screen rootScreenOrNull = getOpenedScreens().getRootScreenOrNull();
-
-        if (rootScreenOrNull != null) {
-            return rootScreenOrNull;
-        }
-
-        environment.getScreens()
-                .create(mainScreenClass, OpenMode.ROOT)
-                .show();
-
-        return getOpenedScreens().getRootScreen();
+        this.screens = screens;
     }
 
 
 
     @Override
-    public <E extends Entity, S extends StandardEditor<E>> StandardEditorTestAPI<E, S> getOpenedEditorScreen(
+    public <E, S extends StandardEditor<E>> StandardEditorTestAPI<E, S> getOpenedEditorScreen(
         Class<S> screenEditorClass
     ) {
         Screen screen = getLastOpenedScreen();
@@ -65,7 +46,7 @@ public class CubaWebUiTestAPI implements UiTestAPI {
     }
 
     @Override
-    public <E extends Entity, S extends StandardEditor<E>> StandardEditorTestAPI<E,S> getLazyOpenedEditorScreen(
+    public <E, S extends StandardEditor<E>> StandardEditorTestAPI<E,S> getLazyOpenedEditorScreen(
         Class<S> screenEditorClass
     ) {
         final Optional<StandardEditorTestAPI<E, S>> optionalScreen = tryToOpenStandardEditor(
@@ -84,7 +65,7 @@ public class CubaWebUiTestAPI implements UiTestAPI {
     }
 
     @Override
-    public <E extends Entity, S extends StandardLookup<E>> StandardLookupTestAPI<E, S> getLazyOpenedLookupScreen(
+    public <E, S extends StandardLookup<E>> StandardLookupTestAPI<E, S> getLazyOpenedLookupScreen(
         Class<S> screenLookupClass
     ) {
         final Optional<StandardLookupTestAPI<E, S>> optionalScreen = tryToOpenStandardLookup(
@@ -121,7 +102,7 @@ public class CubaWebUiTestAPI implements UiTestAPI {
         }));
     }
 
-    private <E extends Entity, S extends StandardEditor<E>> Optional<StandardEditorTestAPI<E,S>> tryToOpenStandardEditor(
+    private <E, S extends StandardEditor<E>> Optional<StandardEditorTestAPI<E,S>> tryToOpenStandardEditor(
         Class<S> screenEditorClass
     ) {
         Screen screen = getLastOpenedScreen();
@@ -136,7 +117,7 @@ public class CubaWebUiTestAPI implements UiTestAPI {
     }
 
 
-    private <E extends Entity, S extends StandardLookup<E>> Optional<StandardLookupTestAPI<E,S>> tryToOpenStandardLookup(
+    private <E, S extends StandardLookup<E>> Optional<StandardLookupTestAPI<E,S>> tryToOpenStandardLookup(
         Class<S> screenLookupClass
     ) {
         Screen screen = getLastOpenedScreen();
@@ -166,7 +147,7 @@ public class CubaWebUiTestAPI implements UiTestAPI {
     }
 
     @Override
-    public <E extends Entity, S extends StandardLookup<E>> StandardLookupTestAPI<E, S> getOpenedLookupScreen(
+    public <E, S extends StandardLookup<E>> StandardLookupTestAPI<E, S> getOpenedLookupScreen(
         Class<S> screenLookupClass
     ) {
 
@@ -197,7 +178,7 @@ public class CubaWebUiTestAPI implements UiTestAPI {
     }
 
     @Override
-    public <E extends Entity, S extends StandardEditor<E>> StandardEditorTestAPI<E,S> openStandardEditor(
+    public <E, S extends StandardEditor<E>> StandardEditorTestAPI<E,S> openStandardEditor(
         Class<E> entityClass,
         Class<S> standardEditorClass
     ) {
@@ -208,8 +189,12 @@ public class CubaWebUiTestAPI implements UiTestAPI {
         return new StandardEditorTestAPI<>(standardEditorClass, screen);
     }
 
+    private Screen rootScreen() {
+        return screens.getOpenedScreens().getRootScreen();
+    }
+
     @Override
-    public <E extends Entity, S extends StandardEditor<E>> StandardEditorTestAPI<E,S> openStandardEditor(
+    public <E, S extends StandardEditor<E>> StandardEditorTestAPI<E,S> openStandardEditor(
         Class<E> entityClass,
         Class<S> standardEditorClass,
         E entity
@@ -222,7 +207,7 @@ public class CubaWebUiTestAPI implements UiTestAPI {
     }
 
     @Override
-    public <E extends Entity, S extends StandardLookup<E>> StandardLookupTestAPI<E, S> openStandardLookup(
+    public <E, S extends StandardLookup<E>> StandardLookupTestAPI<E, S> openStandardLookup(
         Class<E> entityClass,
         Class<S> lookupScreenClass
     ) {
@@ -253,8 +238,7 @@ public class CubaWebUiTestAPI implements UiTestAPI {
     }
 
     private Screens.OpenedScreens getOpenedScreens() {
-        return environment.getScreens()
-                .getOpenedScreens();
+        return screens.getOpenedScreens();
     }
 
     private Screen getLastOpenedScreen() {
@@ -277,7 +261,7 @@ public class CubaWebUiTestAPI implements UiTestAPI {
 
     @Override
     public void closeAllScreens() {
-        environment.getScreens().removeAll();
+        screens.removeAll();
     }
 
 

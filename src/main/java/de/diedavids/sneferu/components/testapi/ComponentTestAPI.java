@@ -1,6 +1,6 @@
 package de.diedavids.sneferu.components.testapi;
 
-import com.haulmont.cuba.gui.components.Component;
+import io.jmix.ui.component.Component;
 
 public abstract class ComponentTestAPI<C extends Component> {
 

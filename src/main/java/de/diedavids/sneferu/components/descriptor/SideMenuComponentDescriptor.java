@@ -1,7 +1,7 @@
 package de.diedavids.sneferu.components.descriptor;
 
-import com.haulmont.cuba.gui.components.mainwindow.SideMenu;
 import de.diedavids.sneferu.components.testapi.GenericComponentTestAPI;
+import io.jmix.ui.component.mainwindow.SideMenu;
 
 public class SideMenuComponentDescriptor extends GenericComponentDescriptor<SideMenu, GenericComponentTestAPI<SideMenu>> {
 

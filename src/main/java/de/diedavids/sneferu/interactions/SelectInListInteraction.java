@@ -1,16 +1,16 @@
 package de.diedavids.sneferu.interactions;
 
-import com.haulmont.cuba.core.entity.Entity;
-import com.haulmont.cuba.gui.components.Component;
-import com.haulmont.cuba.gui.components.ListComponent;
 import de.diedavids.sneferu.Interaction;
 import de.diedavids.sneferu.components.ComponentDescriptor;
 import de.diedavids.sneferu.components.testapi.ComponentTestAPI;
 import de.diedavids.sneferu.screen.ScreenTestAPI;
+import io.jmix.ui.component.Component;
+import io.jmix.ui.component.ListComponent;
+
 import java.util.Collection;
 import java.util.Collections;
 
-public class SelectInListInteraction<E extends Entity> implements Interaction {
+public class SelectInListInteraction<E> implements Interaction {
 
     private final ComponentDescriptor<? extends Component, ? extends ComponentTestAPI> componentDescriptor;
     private final Collection<E> values;

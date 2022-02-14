@@ -1,18 +1,14 @@
 package de.diedavids.sneferu;
 
-import com.haulmont.cuba.core.entity.Entity;
-import com.haulmont.cuba.gui.screen.Screen;
-import com.haulmont.cuba.gui.screen.StandardEditor;
-import com.haulmont.cuba.gui.screen.StandardLookup;
-import de.diedavids.sneferu.screen.InputDialogTestAPI;
-import de.diedavids.sneferu.screen.ScreenTestAPI;
-import de.diedavids.sneferu.screen.StandardEditorTestAPI;
-import de.diedavids.sneferu.screen.StandardLookupTestAPI;
-import de.diedavids.sneferu.screen.StandardScreenTestAPI;
+
+import de.diedavids.sneferu.screen.*;
+import io.jmix.ui.screen.Screen;
+import io.jmix.ui.screen.StandardEditor;
+import io.jmix.ui.screen.StandardLookup;
 
 
 /**
- * UITestAPI is the main entry point for interacting with Screens in an web integration test case.
+ * UITestAPI is the main entry point for interacting with Screens in a web integration test case.
  *
  * This API provides the ability to receive / work with ScreenTestAPI instances, that allow
  * to interact with a particular screen via its Test API.
@@ -39,17 +35,17 @@ public interface UiTestAPI {
    *
    * @return an instance of the Test API
    */
-  <E extends Entity, S extends StandardEditor<E>> StandardEditorTestAPI<E, S> getOpenedEditorScreen(
+  <E, S extends StandardEditor<E>> StandardEditorTestAPI<E, S> getOpenedEditorScreen(
       Class<S> screenEditorClass
   );
 
 
-  <E extends Entity, S extends StandardEditor<E>> StandardEditorTestAPI<E, S> getLazyOpenedEditorScreen(
+  <E, S extends StandardEditor<E>> StandardEditorTestAPI<E, S> getLazyOpenedEditorScreen(
       Class<S> screenEditorClass
   );
 
 
-  <E extends Entity, S extends StandardLookup<E>> StandardLookupTestAPI<E, S> getLazyOpenedLookupScreen(
+  <E, S extends StandardLookup<E>> StandardLookupTestAPI<E, S> getLazyOpenedLookupScreen(
       Class<S> screenLookupClass
   );
 
@@ -70,7 +66,7 @@ public interface UiTestAPI {
    *
    * @return an instance of the Test API
    */
-  <E extends Entity, S extends StandardLookup<E>> StandardLookupTestAPI<E, S> getOpenedLookupScreen(
+  <E, S extends StandardLookup<E>> StandardLookupTestAPI<E, S> getOpenedLookupScreen(
       Class<S> screenLookupClass
   );
 
@@ -98,7 +94,7 @@ public interface UiTestAPI {
    * @param <S> type of the Standard Editor
    * @return an instance of this editor screen (via StandardEditorTestAPI)
    */
-  <E extends Entity, S extends StandardEditor<E>> StandardEditorTestAPI<E, S> openStandardEditor(
+  <E, S extends StandardEditor<E>> StandardEditorTestAPI<E, S> openStandardEditor(
       Class<E> entityClass,
       Class<S> standardEditorClass
   );
@@ -112,7 +108,7 @@ public interface UiTestAPI {
    * @param <S> type of the Standard Editor
    * @return an instance of this editor screen (via StandardEditorTestAPI)
    */
-  <E extends Entity, S extends StandardEditor<E>> StandardEditorTestAPI<E, S> openStandardEditor(
+  <E, S extends StandardEditor<E>> StandardEditorTestAPI<E, S> openStandardEditor(
       Class<E> entityClass,
       Class<S> standardEditorClass,
       E entity
@@ -128,7 +124,7 @@ public interface UiTestAPI {
    * @param <S> type of the StandardLookup
    * @return an instance of this lookup screen (via StandardLookupTestAPI)
    */
-  <E extends Entity, S extends StandardLookup<E>> StandardLookupTestAPI<E, S> openStandardLookup(
+  <E, S extends StandardLookup<E>> StandardLookupTestAPI<E, S> openStandardLookup(
       Class<E> entityClass,
       Class<S> lookupScreenClass
   );

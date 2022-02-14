@@ -1,12 +1,13 @@
 package de.diedavids.sneferu.screen;
 
-import com.haulmont.cuba.gui.components.Component;
-import com.haulmont.cuba.gui.screen.Screen;
 import de.diedavids.sneferu.Interaction;
 import de.diedavids.sneferu.InteractionExecutor;
 import de.diedavids.sneferu.InteractionWithOutcome;
 import de.diedavids.sneferu.components.ComponentDescriptor;
 import de.diedavids.sneferu.components.testapi.ComponentTestAPI;
+import io.jmix.ui.component.Component;
+import io.jmix.ui.screen.Screen;
+
 import java.util.function.Supplier;
 
 public abstract class ScreenTestAPI<S extends Screen, THIS extends ScreenTestAPI> implements

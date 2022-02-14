@@ -1,8 +1,8 @@
 package de.diedavids.sneferu.components.descriptor;
 
 
-import com.haulmont.cuba.gui.components.Image;
 import de.diedavids.sneferu.components.testapi.GenericComponentTestAPI;
+import io.jmix.ui.component.Image;
 
 public class ImageComponentDescriptor
         extends GenericComponentDescriptor<Image, GenericComponentTestAPI<Image>> {

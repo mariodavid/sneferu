@@ -1,6 +1,8 @@
 package de.diedavids.sneferu.screen;
 
-import com.haulmont.cuba.gui.screen.Screen;
+
+import io.jmix.ui.screen.Screen;
+
 import java.util.function.Supplier;
 
 public class StandardScreenTestAPI<S extends Screen> extends ScreenTestAPI<S, StandardScreenTestAPI> {

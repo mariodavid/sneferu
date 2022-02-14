@@ -1,9 +1,9 @@
 package de.diedavids.sneferu.components.descriptor;
 
 
-import com.haulmont.cuba.gui.components.Component;
 import de.diedavids.sneferu.components.ComponentDescriptor;
 import de.diedavids.sneferu.components.testapi.ComponentTestAPI;
+import io.jmix.ui.component.Component;
 
 public abstract class GenericComponentDescriptor<C extends Component, F extends ComponentTestAPI<C>>
         implements ComponentDescriptor<C, F> {

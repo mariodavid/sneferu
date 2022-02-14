@@ -1,6 +1,6 @@
 package de.diedavids.sneferu.components.testapi;
 
-import com.haulmont.cuba.gui.components.SuggestionField;
+import io.jmix.ui.component.SuggestionField;
 
 public class SuggestionFieldTestAPI extends GenericComponentTestAPI<SuggestionField> {
     public SuggestionFieldTestAPI(SuggestionField component) {
